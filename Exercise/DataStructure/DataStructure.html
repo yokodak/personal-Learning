@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+
+// //栈
+//     function Stack(){
+//         this.items = []
+//     }
+//     //入栈
+//     Stack.prototype.push = function (item){
+//         this.items.push(item);
+//     }
+//     //出栈
+//     Stack.prototype.pop = function(){
+//         return this.items.pop();
+//     }
+//     //查看栈顶元素
+//     Stack.prototype.peek = function(){
+//         return this.items[this.items.length-1];
+//     }
+//     //判断栈是否为空
+//     Stack.prototype.isEmpty = function(){
+//         return this.items.length === 0;
+//     }
+//     //获取栈中的元素个数
+//     Stack.prototype.size = function(){
+//         return this.items.length;
+//     }
+//     //toString方法
+//     Stack.prototype.toString = function(){
+//       let result = ''
+//         for(let i = 0;i < this.items.length; i++){
+//             result += this.items[i] + '';
+//         }
+//         return result;
+//     }
+
+//     let myStack = new Stack();
+//     myStack.push(3);
+//     myStack.push(2);
+//     myStack.push(1);
+//     myStack.toString()
+//     // console.log(myStack.toString());
+//     // console.log( typeof myStack.items[0]);
+//     // console.log(myStack.items);
+//     //利用栈实现十进制转二进制
+//     function dec2bin(dec){
+//         let stack = [];//new Stack()
+//         while(dec > 0){
+//             stack.push(dec % 2);
+//             dec = Math.floor(dec / 2);
+//         }
+//         let result = ''
+//         while(stack.length > 0)//!stack.isEmpty()
+//         {
+//           result += stack.pop();
+//         }
+//         return(result);
+//     }
+
+//     // console.log(dec2bin(15));
+// //队列
+//  function Queue(){
+//    this.items = [];
+//  }
+//  //向队列中添加元素,入队
+//  Queue.prototype.enqueue = function(item){
+//    this.items.push(item);
+//  }
+//  //出队，取出队列的元素
+//  Queue.prototype.dequeue = function(){
+//    return this.items.shift();
+//  }
+//  //查看队列前端元素
+//  Queue.prototype.front = function(){
+//   return this.items[0];
+// }
+// //检查队列是否为空
+// Queue.prototype.isEmpty = function(){
+//   return this.items.length === 0;
+// }
+// //查看队列大小
+// Queue.prototype.size = function(){
+//   return this.items.length;
+// }
+// //toString方法
+// Queue.prototype.toString = function(){
+//   let result = '';
+//   for(let item of this.items){
+//     result += item + ''
+//   }
+//   return result; 
+// }
+// let queue = new Queue();
+// queue.enqueue(1);
+// queue.enqueue(2);
+// queue.enqueue(3);
+// queue.dequeue();
+// // console.log(queue);
+// // console.log(typeof queue.toString());
+// //击鼓传花，丢手绢
+// function passGame(group,num){
+//   if(!group instanceof Array){
+//     return
+//   }
+//   let nameList =[].concat(group);
+//   console.log(nameList);
+//   while(group.length > 1){
+//     for(i = 0;i < num-1;i++){
+//       group.push(group.shift());
+//     }
+//     group.shift()
+//   }
+//   let winner = group[0];
+//   console.log(winner);
+//   return nameList.indexOf(winner);
+
+// }
+// let theGroup = ['a','b','c','d','e','f'];
+// // console.log(passGame(theGroup,5));
+
+
+// //优先级队列 Priority Queue
+// //ES6
+// // class Obj {
+// //     constructor(ele, n) {
+// //       this.ele = ele
+// //       this.n = n
+// //     }
+// //   }
+// //   class PriorityQueue {
+// //     constructor() {
+// //       this.items = [];
+// //     }
+// //     enqueue(ele, n) {
+// //       let p = new Obj(ele, n);
+// //       if (this.items.length < 1) {
+// //         this.items.push(p);
+// //       } else {
+// //         for (let i = this.items.length - 1; i >= 0; i--) {
+// //           if (p.n > this.items[i].n) {
+// //             this.items.splice(i + 1, 0, p);
+// //             break;
+// //           }
+// //           if (i === 0) {
+// //             this.items.unshift(p)
+// //           }
+// //         }
+// //       }
+// //    }
+// // }
+// //   let priorityQueue = new PriorityQueue();
+// //   priorityQueue.enqueue('小明', 80);
+// //   priorityQueue.enqueue('小男', 70);
+// //   priorityQueue.enqueue('小航', 100);
+// //   priorityQueue.enqueue('小郑', 60);
+// //   priorityQueue.enqueue('小强', 99);
+// //   console.log(priorityQueue);
+// //优先级队列
+//   function PriorityQueue(){
+//     this.items = []; 
+//   }
+//   function QueueElement(element,priority){
+//       this.element = element;
+//       this.priority = priority;
+//     }
+//   PriorityQueue.prototype.enqueue = function(element,priority){
+
+//     let queueElement = new QueueElement(element,priority);
+//     if(this.items.length === 0){//栈内没有元素，则直接插入
+//       this.items.push(queueElement);
+//     }else{//栈内有元素，则先判断要插入的元素的优先级是否小于已经存在的元素的优先级
+//       let isAdded = false;
+//       for(let i = 0;i < this.items.length;i++){
+//         if(queueElement.priority < this.items[i].priority ){//优先级小
+//           //将其插入到当前元素前
+//           this.items.splice(i,0,queueElement);
+//           isAdded = true;
+//           break;
+//         }
+//       }
+//       if(!isAdded){
+//       this.items.push(queueElement);
+//       }
+//     }
+//   }
+//   PriorityQueue.prototype.toString = function(){
+//   let result = '';
+//   for(let item of this.items){
+//     result += item + ''
+//   }
+//   return result; 
+// }
+//   let priorityQueue = new PriorityQueue();
+//   priorityQueue.enqueue('小明', 80); 
+//   priorityQueue.enqueue('小强', 99);
+//   priorityQueue.enqueue('小宏', 97);
+//   priorityQueue.enqueue('小男', 70);
+//   priorityQueue.enqueue('小航', 100);
+//   priorityQueue.enqueue('小郑', 60);
+
+//   // console.log(priorityQueue);
+//   // console.log(priorityQueue.toString());
+
+//链表，每次查找（访问节点都要从头节点开始）
+// function LinkedList(){
+//   this.head = null;
+//   this.length = 0;
+// }
+// // function Node(data){
+// //   this.data = data;
+// //   this.next = null;
+// // }
+// //新增节点
+// LinkedList.prototype.append = function(data){
+//   let node = new Node(data);
+//   if(this.length === 0){//链表为空，则新增节点变为头节点
+//     this.head = node;
+//   }
+//   else{//向末尾追加一个节点
+//     let current = this.head;
+//     while(current.next){//找到末尾的节点
+//       current = current.next
+//     }
+//     current.next = node//将新增节点添加到末尾
+//   }
+//   this.length += 1;
+// }
+// //插入节点
+// LinkedList.prototype.insert = function(position,data){
+//   //判断插入的位置，小于0或者越界都不行
+//   if(position < 0 || position > this.length){
+//     return false;
+//   }
+//   let node = new Node();
+//   if(position === 0){//插入的位置是0
+//     node.next = this.head;//插入前的head
+//     this.head = node;//插入后，node变为头节点
+//   }else{
+//     let index = 0;
+//     let current = this.head;
+//     let previous = null;
+//     while(index ++ < position){
+//       previous = current;
+//       current = current.next;
+//     }
+//     previous.next = node;
+//     node.next = current;
+//   }
+//   this.length += 1;
+// }
+// //获取对应位置节点的数据
+// LinkedList.prototype. getDataByPosition = function(position){
+//   //参数范围判断
+//   if(position < 0 || position > this.length-1){
+//     return 
+//   }
+//   let current = this.head;
+//   let index = 0;
+//   while(index++ < position){
+//     current = current.next;
+//   }
+//   console.log(current.data);
+//   return current.data
+// }
+// //获取元素对应位置的索引
+// LinkedList.prototype.getIndexByData = function(data){
+//   let index = 0;
+//   let current = this.head;
+//   while(current){
+//     if(current.data === data){
+//       // console.log(index);
+//       return index
+//     }
+//     current = current.next;
+//     index++;
+//   }
+//   console.log('not found');
+//   return -1
+// }
+// //应该封装一个函数专门用来查找指定位置的节点
+// LinkedList.prototype. getNodeByPosition = function(position){
+//   //参数范围判断
+//   if(position < 0 || position > this.length-1){
+//     return 
+//   }
+//   let current = this.head;
+//   let index = 0;
+//   while(index++ < position){
+//     current = current.next;
+//   }
+//   return current;
+// }
+// //应该封装一个函数专门用来查找指定数据的节点,只会返回第一个符合条件的节点
+// LinkedList.prototype. getNodeByData = function(data){
+
+//   let current = this.head;
+//   let index = 0;
+//   while(current){
+//     if(current.data === data){
+//       return current;
+//     }
+//     current = current.next;
+//   }
+//   return -1;//没找到
+// }
+// //更新数据
+// LinkedList.prototype.updateData= function(position,data){
+//   this.getNodeByPosition(position).data = data;
+// }
+
+// //从链表中删除一项，根据位置
+// LinkedList.prototype.removeItemByPosition = function(position){
+//   let flag = false;
+//   if(position < 0 || position > this.length-1){
+//     return flag
+//   }
+//   let current = this.head;
+//   let previous = null;
+//   let index = 0;
+//   //找到要删除的节点
+//   while(index++ < position){
+//     previous = current;
+//     current = current.next;  
+//   }  //首先要判断要删除的是不是头节点 
+//   if(current === this.head){
+//     this.head = current.next
+//   }else{
+//     previous.next = current.next
+//   }
+//   this.length -= 1;
+//   flag = true;
+//   return current.data;
+// }
+// //从链表中删除一项，根据元素，删除第一个匹配到的元素
+// LinkedList.prototype.removeItemByData = function(data){
+//     //或者先根据data找到node的位置index，再根据位置删除元素
+//   let position = this.getIndexByData(data);
+//   if(position !== -1){
+//     return this.removeItemByPosition(position);
+//   }
+  
+  // let flag = false;//是否删除标志位
+  // let current = this.head;
+  // let previous = null;
+  // let index = 0;
+  // //找到要删除的节点
+  // while(current){
+  //   if(current.data === data){
+  //     flag = true;
+  //     break;
+  //   }
+  //   previous = current;
+  //   current = current.next;
+  // }  
+  // if(flag){//找到匹配的节点才进行删除操作
+  //   if(current === this.head){
+  //   this.head = current.next
+  // }else{
+  //   previous.next = current.next
+  // }
+  // this.length -= 1;
+  // return current.data;
+  // }
+  // return flag;
+// }
+//
+//测试
+// let list = new LinkedList();
+// list.append('0');
+// list.append('1');
+// list.append('2');
+// list.append('3');
+// list.updateData(0,'我是更新后的数据')
+// // console.log(list.getNodeByData('1'));
+// // console.log(list.removeItemByPosition(2));
+// console.log(list.removeItemByData('1'));
+// console.log(list);
+
+//双向链表
+// function DoublyLinkedList(){
+//   this.head = null;
+//   this.tail = null;
+//   this.length = 0;
+// }
+// //双向链表节点
+// function Node(data){
+//   this.data = data;
+//   this.prev = null;
+//   this.next = null;
+// }
+// //添加新节点
+// DoublyLinkedList.prototype.append = function(data){
+//   let node = new Node(data);
+//   if(this.length === 0){
+//     this.head = node;
+//     this.tail = node;
+//   }else{
+//     this.tail.next = node;
+//     node.prev = this.tail;
+//     this.tail = node;
+//   }
+//   this.length += 1;
+// }
+// //
+// //正反向遍历双向链表
+// //正向，依次向后遍历
+// DoublyLinkedList.prototype.backwaordString = function(){
+//   let current = this.head;
+//   let result = '';
+//   while(current){
+//     result += current.data;
+//     current = current.next;
+//   }
+//   console.log(result); 
+//   return result;
+// }
+// //反向，依次向前遍历
+// DoublyLinkedList.prototype.forwordString = function(){
+//   let current = this.tail;
+//   let result = '';
+//   while(current){
+//     result += current.data;
+//     current = current.prev;
+//   }
+//   console.log(result); 
+//   return result;
+// }
+// //toString方法
+// DoublyLinkedList.prototype.toString = function(){
+//   return this.backwaordString();
+// }
+// //插入新节点
+// DoublyLinkedList.prototype.insert = function(position,data){
+//   //越界判断
+//   if(position < 0 || position > this.length){
+//     return false
+//   }
+//   let node = new Node(data);
+//   //判断链表是否为空
+//   if( this.length === 0){
+//     this.head = node;
+//     this.tail = node;
+//   }else if(position === 0)//链表不为空，判断插入的位置
+//   {//插入的位置是0,也就是插入在头节点之前
+//     this.head.prev = node;
+//     node.next = this.head;
+//     this.head = node;
+//   }else if(position === this.length){
+//     //插入的位置是尾节点后
+//     this.tail.next = node;
+//     node.prev = this.tail;
+//     this.tail = node;
+//   }else{
+//    let current = this.head;
+//    let index = 0
+//    while(index++ < position){
+//     current = current.next;//先找到要插入的位置
+//    }
+//   //  console.log(current);
+//    node.prev = current.prev
+//    current.prev.next = node;
+//    current.prev = node;
+//    node.next = current;
+//   }
+//   this.length += 1;
+// }
+// //根据位置获取节点
+// DoublyLinkedList.prototype.getNodeByPosition = function(position){
+//   //先对传入的参数进行越界判断
+//   if(position < 0 || position >=  this.length){
+//     // console.log(this.length);
+//     // console.log('not found');
+//     return false;
+//   }
+//   let index = 0;
+//   if(position <= Math.floor(this.length / 2)){
+//     let current = this.head;
+//     while(index++ < position){//这里可以优化,此时位置靠前所以从前开始查找
+//     current = current.next;
+//   }
+//   console.log(`从前向后找${current.data}`);
+//   return current;
+//   }else{
+//     index = this.length - 1;
+//     let current = this.tail;
+//     while(index-- > position){
+//       current = current.prev;
+//     }
+//     console.log(`从后向前找${current.data}`);
+//     return current;
+//   }
+// }
+// //根据传入的数据查找对应的位置
+// DoublyLinkedList.prototype.getIndexByData = function(data){
+//   let index = 0;
+//   let current = this.head;
+//   while(current){
+//     if(current.data === data){
+//       return index;
+//     }
+//     current = current.next;
+//     index += 1;
+//   }
+//   return -1
+// }
+// //根据传入的位置和data更新节点
+// DoublyLinkedList.prototype.update = function(position,data){
+//   //先根据位置获取到节点，然后更新节点数据
+//   let current = this.getNodeByPosition(position);
+//   if(current)
+//   {
+//     current.data = data;
+//     return true;
+//   }
+//   return false;
+// }
+// //根据位置删除对应节点
+// DoublyLinkedList.prototype.removeNodeAtposition = function(position){
+//   let current = this.getNodeByPosition(position);
+//   if(current){
+//     if(this.length === 1){
+//         this.head = null;
+//         this.tail = null;
+//     }else if(current === this.head){
+//       // console.log('我是头节点');  
+//       this.head.next.prev = null;
+//       this.head = this.head.next;
+//       console.log('去掉头');
+//     }else if (current === this.tail){
+//     // console.log('我是尾节点');
+//     this.tail.prev.next = null;
+//     this.tail = this.tail.prev;
+//     console.log('去掉尾巴');
+//   }else{
+//     current.prev.next = current.next;
+//     current.next.prev = current.prev;
+//     console.log('去掉中间节点');
+//   }
+//       console.log('removed');
+//       this.length -= 1;
+//       console.log(`${this.length} 被删除的数据是${current.data}`);
+//       return true;
+//   }else{
+//     return false;
+//   }
+// }
+// //根据传入的元素删除对应节点
+// DoublyLinkedList.prototype.removeNodeByData = function(data){
+//   //先根据data找到位置，再根据位置删除节点即可
+//   let position = this.getIndexByData(data);
+//   return this.removeNodeAtposition(position);
+// }
+
+
+// let doubleList = new DoublyLinkedList();
+// doubleList.append('0');//position = 0
+// doubleList.append('1');//position = 1
+// doubleList.append('2');//position = 2
+// doubleList.append('3');//position = 3
+// doubleList.insert(4,"哈哈哈");//position = 4
+// doubleList.getNodeByPosition(0);
+// doubleList.update(4,'呵呵呵');
+// console.log(doubleList.removeNodeByData('哈哈哈'));
+// console.log(doubleList);
+
+// doubleList.backwaordString();
+
+
+//集合的封装
+// function Set(){
+//   this.items = {};
+// }
+// //has方法，判断集合内是否有某个元素
+// Set.prototype.has = function(value){
+//   return this.items.hasOwnProperty(value);
+// }
+// //add方法，将一个元素不重复地添加到集合
+// Set.prototype.add = function(value){
+//   if(this.has(value)){
+//     return false;
+//   }else{
+//     this.items[value] = value;
+//   }
+// }
+// //remove方法 删除集合中的元素
+// Set.prototype.remove = function(value){
+//   //判断该元素是否在集合中
+//   if(!this.has(value)){
+//     return false;
+//   }
+//   delete this.items[value];
+//   return true
+// }
+// //clear方法 清空集合
+// Set.prototype.clear = function(){
+//   this.items = {};
+// }
+// //size方法 获取集合元素个数
+// Set.prototype.size = function(){
+//   return Object.keys(this.items).length;
+// }
+// //values方法，获取集合中所有元素的值
+// Set. prototype.values = function(){
+//   return Object.values(this.items)
+// }
+// //集合间的操作
+// //求并集
+// Set.prototype.union = function(set){
+//   let unionSet = new Set();
+//   for(let i = 0; i < this.values().length; i++){
+//     unionSet.add(this.values()[i]);
+//   }
+//   for(let i = 0; i < set.values().length; i++){
+//     unionSet.add(set.values()[i]);
+//   }
+//   console.log(unionSet);
+//   return unionSet;
+
+// }
+// //求交集
+// Set.prototype.intersection = function(set){
+//   let intersectionSet = new Set();
+//   for(let i = 0; i < this.values().length; i++){
+//    if(set.has(this.values()[i])){
+//     // console.log(this.values()[i]);
+//      intersectionSet.add(this.values()[i])
+//    }
+//   }
+//   return intersectionSet;
+// }
+// //求差集，也就是两个集合之间不同的元素，存在于A不存在于B
+// Set.prototype.subtraction = function(set){
+//   let subtraction = new Set();
+//   for(let i = 0; i < this.values().length; i++){
+//    if(!set.has(this.values()[i])){
+//     // console.log(this.values()[i]);
+//     subtraction.add(this.values()[i])
+//    }
+//   }
+//   return subtraction;
+// }
+// //验证子集，A是是否是B的子集
+// Set.prototype.isSubset = function(set){
+//   for(let i = 0; i < this.values().length; i++){
+//    if(!set.has(this.values()[i])){
+//     // console.log('A中存在和B不同元素');
+//     // console.log(this.values()[i]);
+//    return false;
+//    }
+//   }
+//   return true;
+// }
+
+// //测试集合
+// let set = new Set();
+// let set2 = new Set();
+// set.add(1);
+// set.add(2);
+// set.add(3);
+// set.add(4);
+// set.add(5);
+
+// set2.add(3);
+// set2.add(5);
+// set2.add(6);
+// set.remove(0);
+// set.clear()
+// console.log(set.values());
+// console.log(set.union(set2));
+// console.log(set.intersection(set2));
+// console.log(set.subtraction(set2));
+// console.log(set2.isSubset(set));
+// console.log(set);
+
+//字典Map
+// function Map2(){
+//   this.items = {}
+// }
+// //向字典中添加键值对
+// Map2.prototype.set = function(key,value){
+//   this.items[key] = value;
+// }
+// //判断字典中是否有某个key
+// Map2.prototype.has = function(key){
+//   return this.items.hasOwnProperty(key);
+// }
+// //从字典中移除元素
+// Map2.prototype.remove = function(key){
+//   if(this.has(key)){
+//     delete this.items[key];
+//     return true;
+//   }
+//   else{
+//     return false;
+//   }
+// }
+// //根据key获取value
+// Map2.prototype.getValue = function(key){
+//   return this.has(key)?this.items[key]:undefined;
+// }
+// //获取所有的key
+// Map2.prototype.keys = function(){
+//   return Object.keys(this.items);
+// }
+// //获取所有的value
+// Map2.prototype.values = function(){
+//   return Object.values(this.items);
+// }
+// //测试
+// let map = new Map2();
+// let map2 = new Map();
+// map.set(0,'seb');
+// map.set(1,'robin');
+// map.set(2,'rayn');
+// map2.set(0,'james');
+// map2.set(1,'michael');
+// map.remove(0)
+
+// console.log(map.getValue(2));
+// console.log(map.values());
+
+// console.log(map2);
+
+
+//哈希
+//基于数组实现哈希，查找插入删除速度快
+//将索引和内容联系起来
+//利用哈希函数，将字符转换为下标值
+//方案一：字符转数字（编码，如ASCII码），每个字母对应的数字相加得到一个数字用来表示该单词
+//但是容易重复，一个下标只能存储一个数据，所以重复会造成数据覆盖，为了降低重复数量，
+//还有一种方案就是将每个字母对应的数字进行幂乘，得到的结果虽然不容易重复但是造成下标值过大，空间浪费
+//所以综合两种方案，我们选择将幂乘结果进行压缩，（进行取余操作）
+//哈希函数
+//秦九韶算法 ans = ans * x + str[i]
+
+// function getAns(str, x)//求出该多项式的结果
+// //以字符串形式传入每个项的系数，从最高项开始,传入x作为幂的底数的值
+// {
+//   let ans = 0 ;//多项式初始为0
+//     for(let i =0 ;i < str.length ; i++)
+//         {      
+//             ans = ans * x + str[i]
+//         }
+//     return ans
+// }
+// console.log(getAns('54321',3));
+
+//哈希函数,字符串转数字，数字取余得到最终结果
+/*
+@str 要进行哈希化的字符字符串
+@size 将数值压缩到该范围之间（0-size）
+// */
+// HashTable.prototype.hashFunc = function(str,size){
+//   //先定义一个变量用于接收哈希结果
+//   let hashCode = 0;
+//   //先将字符串转换为大数值，Unicode编码加幂乘（秦九韶算法）
+//   //遍历字符串
+//   for(let i = str.length - 1; i >= 0; i--){
+//     // console.log(str[i]);
+//     hashCode = hashCode * 37 + str.codePointAt(i);//哈希值
+//   }
+//   let index = hashCode % size;
+//   // console.log(hashCode);
+//   return index;
+// }
+// // console.log(hashFunc('abc',7));
+// // console.log(hashFunc('90hscqq11',7));
+// // console.log(hashFunc('cba',7));
+// // console.log(hashFunc('nab',7));
+// // console.log(hashFunc('lluo',17));
+// //哈希表的封装
+// function HashTable(){
+//   this.storage = []
+//   this.count = 0;
+//   this.limit = 7;//扩容缩容
+// }
+// //值于storage里的元素使用数组还是链表根据实际需求，如果需要频繁插入删除，使用链表比较合适
+// //为了方便，我们这里使用数组（查询效率高）
+// //哈希表的插入和更新
+// HashTable.prototype.put = function(key,value){
+//   //key需要进行哈希化,以获得索引
+//   let index = this.hashFunc(key,this.limit);//该数据存放的那个bucket的索引
+//   // console.log(index);
+//   let bucket = this.storage[index];//取出桶
+//   // console.log(bucket);
+//   if(bucket === undefined){//第一次添加该index的数据，没有桶
+//     //创建bucket,保存key和value
+//     // console.log(index);
+//     bucket = [];//创建桶
+//     this.storage[index] = bucket;
+//   }
+//   //不是第一次添加该index的数据，也就是产生了哈希冲突
+//   //遍历bucket里的数据,bucket中使用数组tuple保存了键值对
+//   for(i = 0 ; i < bucket.length; i++){//一开始不会进入该循环，因为bucket长度为0
+//     let tuple = bucket[i];
+//     //判断插入的数剧的key是否相同，如key ===?张三？,因为哈希表中key不允许重复
+//     if(tuple[0] === key){//如果相同则覆盖，也就是修改数据
+//        tuple[1] = value;
+//        return
+//      }
+//   }
+//  //不相同则插入新数据
+//   bucket.push([key,value]);//将保存数据的数组放入桶中
+//   this.count += 1;
+//   if(this.count / this.limit > 0.75){ 
+//     let newLimit = this.limit*2;
+//       while(!isPrime(newLimit)){
+//         newLimit++
+//       }
+//       console.log('需要扩容');
+//       this.resize(newLimit);
+//     }
+    
+//     // console.log(this.count);
+    
+//   }
+
+
+// //获取hashTable中的元素,我们希望能根据key就能查询到对应数据，比如输入张三，能迅速找到其对应的信息
+// HashTable.prototype.get = function(key){
+//   //首先要先获取key对应的index
+//   let index = this.hashFunc(key,this.limit);
+//   let bucket = this.storage[index];
+//   if( bucket === undefined){
+//     return false;
+//   }else{
+//     for( let i = 0; i < bucket.length; i++ ){
+//       let tuple = bucket[i];
+//       if(tuple[0] === key){
+//         return tuple[1];
+//       }
+//     }
+//     return false;
+//   }
+// }
+
+// //删除哈希表中的元素
+// //根据key删除
+// HashTable.prototype.remove = function(key){
+//   let index = this.hashFunc(key,this.limit);
+//   //判断该index对应的bucket是否存在
+//   let bucket = this.storage[index];
+//   if(bucket === undefined){
+//     return false;
+//   }else{
+//     let deleted = null
+//     for(let i = 0; i < bucket.length; i++){
+//       //查找key对应的数据
+//       let tuple = bucket[i];
+//       if(tuple[0] === key){
+//         bucket.splice(i,1);
+//         this.count -= 1;
+//         deleted = tuple[1];
+//       }
+//     }
+//     if(this.limit > 7 && this.count / this.limit < 0.25){
+//           let newlimit = Math.floor(this.limit / 2);
+//           while(!isPrime(newLimit)){
+//             newLimit++
+//          }
+//           console.log('需要缩容');
+//           this.resize(newlimit)
+//         }
+//       return deleted;
+//   }
+// }
+
+// //其他方法封装
+// //判断哈希表是否为空
+// HashTable.prototype.isEmpty = function(){
+//   return this.count === 0;
+// }
+// //返回哈希表中的元素个数
+// HashTable.prototype.size = function(){
+//   return this.count;
+// }
+
+// //扩容/缩容方法实现//比较消耗性能，时间复杂度O(n2)
+// HashTable.prototype.resize = function(newLimit){
+//   let oldStorage = this.storage;//保存之前的哈希表
+//   //重置当前的哈希表
+//   this.storage = [];
+//   this.count = 0
+//   this.limit = newLimit;
+//   // console.log(oldStorage);
+  
+//   for(let i = 0; i < oldStorage.length; i++){
+//     let bucket = oldStorage[i]
+//     // console.log(bucket);
+//     if(bucket === undefined){
+//       // console.log('没添加过');
+//       continue;
+//     }
+//     for(let j = 0; j < bucket.length; j++){
+//       let tuple = bucket[j];
+//       this.put(tuple[0],tuple[1]);
+//     }
+//   }
+// }
+// //实现容量恒为质数
+// //质数判断
+// function isPrime(num){
+//   //一个数的因数只有1和他本身，则为质数
+//   //任何一个数的因数都是成对出现的，其中一个一定小于等于他的平方根，另一个大于或等于
+//   //所以只要一个数能被他平方根以内的数整除那它就不是质数
+//   let sqrt = parseInt(Math.sqrt(num));
+//   for(let i = 2; i <= sqrt; i++){
+//       if(num % i === 0){
+//       return false
+//     }
+//   }
+//   return true
+
+// }
+
+
+// //测试
+// let hashTable = new HashTable();
+// hashTable.put('Rayn',18);
+// hashTable.put('Ra9n1',90);
+// hashTable.put('white',19);
+// hashTable.put('Rayn2',20);
+// hashTable.put('Rayn3',39);
+// hashTable.put('Rayn4',59);
+// hashTable.put('Rayn5',19);
+// hashTable.put('Rayn',11);
+// hashTable.put('Rayn7',17);
+// hashTable.put('Rayn8',18);
+// hashTable.put('Rayn9',10);
+// hashTable.put('Rayn10',19);
+// hashTable.put('jc',19);
+// hashTable.put('abcv10',19);
+// hashTable.put('Rayn12',19);
+// hashTable.put('Rayn13',19);
+// console.log(hashTable);
+// console.log(hashTable.hashFunc('Rayn',37));
+// console.log(hashTable.hashFunc('Rayn2',37));
+// console.log(hashTable.hashFunc('Rayn32',37));
+// console.log(hashTable.hashFunc('Rayn11',37));
+
+
+
+
+
+
+
+
+// hashTable.put('Rayn6',19);
+// hashTable.put('Rayn6',19);
+// hashTable.put('Rayn6',19);
+// hashTable.put('Rayn6',19);
+// hashTable.put('Rayn6',19);
+// // hashTable.put('',19);
+// hashTable.put('Robin',42);
+// console.log(hashTable.remove('Rayn2'));
+// console.log(hashTable.remove('Rayn3'));
+// console.log(hashTable.remove('Rayn4'));
+// console.log(hashTable.remove('Rayn5'));
+// console.log(hashTable.remove('Rayn6'));
+// console.log(hashTable.remove('Rayn7'));
+// console.log(hashTable.remove('Rayn9'));
+// console.log(hashTable.remove('Rayn13'));
+// console.log(hashTable.remove('Rayn12'));
+// console.log(hashTable);
+// console.log(hashTable.remove('white'));
+// console.log(hashTable.remove('Rayn11'));
+// console.log(hashTable.remove('Rayn1'));
+// console.log(hashTable);
+// // console.log(hashTable.get('stussy'));
+
+//树结构
+//任何树本质上都可以用二叉树模拟
+//BST（Binary Search Tree）二叉搜索树的封装
+// function BST(){
+//   this.root = null;
+// } 
+// //树的节点封装
+// function Node(key){
+//   this.key = key;
+//   this.left = null;
+//   this.right = null;
+// }
+// //树的插入方法
+// BST.prototype.insert = function(key){
+//   let node = new Node(key)
+//   if(this.root === null){
+//     this.root = node;
+//   }else{
+//     this.insertNodeTo(this.root,node);
+//   }
+// }
+// //决定将节点插入到何处的方法//二叉搜索树不允许两个相同键值的节点，
+// //如果非要插入键值相同的，可以为节点新增一个count属性，当key值相等时count++
+// //或者将key值相等的新节点插入到左节点或右节点，在中序遍历时保证树是非严格递增的即可
+// //如果就是不允许相同key值的节点，可以向用户抛出一个错误。
+// BST.prototype.insertNodeTo = function(Existingnode,newNode){
+//   if(newNode.key < Existingnode.key){
+//     if(Existingnode.left === null){
+//       Existingnode.left = newNode;
+//     }else{
+//       this.insertNodeTo(Existingnode.left,newNode);
+//     }  
+//   }else if(newNode.key > Existingnode.key){
+//     if(Existingnode.right === null){
+//       Existingnode.right = newNode;
+//     }else{
+//       this.insertNodeTo(Existingnode.right,newNode);
+//     }
+//   }//如果插入相同key的节点，则打印错误信息
+//    try{
+//       if(newNode.key === Existingnode.key){
+//         // let err = '不允许插入相同key的节点';
+//         let err = newNode.key;
+//         throw err;
+//       }
+//     }
+//     catch(err){
+//       console.log(err + '节点处不允许插入key值相等的节点');
+//     }
+// }
+
+// //遍历二叉搜索树
+// //先序遍历 ： 先序遍历其根节点 --> 先序遍历其左子树 --> 先序遍历其右子树
+// //previous Oder Traversal
+// BST.prototype.POT = function(handler){
+//    this.POTNode(this.root,handler);
+// }
+// BST.prototype.POTNode = function(node,handler){
+//   if( node!== null){
+//     //输出其根的key
+//     handler(node.key);
+//     // console.log(node.key);
+//     this.POTNode(node.left,handler);
+//     this.POTNode(node.right,handler);
+//   }
+// }
+// //中序遍历: 中序遍历其左子树 --> 中序遍历其根节点 --> 中序遍历其右子树
+// BST.prototype.MOT = function(handler){
+//    this.MOTNode(this.root,handler);
+// }
+// BST.prototype.MOTNode = function(node,handler){
+//   if( node!== null){
+//     this.MOTNode(node.left,handler);
+//     handler(node.key)
+//     this.MOTNode(node.right,handler);
+//   }
+// }
+// //后序遍历: 后序遍历其左子树 --> 后序遍历其右子树 --> 后序遍历其根节点
+// BST.prototype.postOT = function(handler){
+//    this.postOTNode(this.root,handler);
+// }
+// BST.prototype.postOTNode = function(node,handler){
+//   if( node!== null){
+//     this.postOTNode(node.left,handler);
+//     this.postOTNode(node.right,handler);
+//     handler(node.key);
+//   }
+// }
+
+// //不用递归，使用栈遍历二叉树
+// //先序遍历
+// BST.prototype.pot = function(){
+//   let result = [];
+//   let node = this.root;
+//   let stack = [];
+//   while( node!== null || stack.length !== 0){
+//     if(node !== null){
+//       result.push(node.key);
+//       stack.push(node);
+//       node = node.left;
+//     }else{
+//       node = stack.pop()
+//       node = node.right;
+//     }
+//   }
+//   return result;
+// }
+// //中序遍历
+// BST.prototype.mot = function(){
+//   let result = [];
+//   let node = this.root;
+//   let stack = [];
+//   while( node!== null || stack.length !== 0){
+//     if(node !== null){
+//       stack.push(node);
+//       node = node.left;
+//     }else{
+//       node = stack.pop()
+//       result.push(node.key);
+//       node = node.right;
+//     }
+//   }
+//   return result;
+// }
+// //后序遍历
+// BST.prototype.lot = function(){
+//   let result = [];
+//   let node = this.root;
+//   let stack = [];
+//   if(this.root === null){
+//     return false
+//   }
+//   stack.push(node);
+//   while(stack.length !== 0){
+//     node = stack.pop();
+//     result.push(node.key);
+//     if(node.left !== null){
+//       stack.push(node.left);
+//     }
+//     if(node.right !== null){
+//       stack.push(node.right)
+//     }
+    
+//   }
+//   return result.reverse();
+// }
+// //二叉搜索树的层次遍历
+// BST.prototype.levelOT = function(){
+//   let node = this.root;
+//   let queue = [];
+//   let result = [];
+//   if(this.root === null){
+//     return false
+//   }
+//   queue.push(node);
+//   while(queue.length !== 0){
+//     node = queue.shift();
+//     result.push(node.key);
+//     if(node.left !== null){
+//       queue.push(node.left);
+//     }
+//     if(node.right !== null){
+//       queue.push(node.right);
+//     }
+//   }
+//   return result;
+// }
+
+// //获取BST的最大值
+// BST.prototype.getMaxKey = function(){
+//   let node = this.root;
+//   let key = null;
+//   while( node!== null){
+//     key = node.key
+//     node = node.right;
+//   }
+//   return key;
+// }
+// //获取BST最小值
+// BST.prototype.getMinKey = function(){
+//   let node = this.root;
+//   let key = null;
+//   while( node!== null){
+//     key = node.key
+//     node = node.left;
+//   }
+//   return key;
+// }
+// //查询对应的key
+// BST.prototype.getNodeByKey = function(key){
+//   let node = this.root;
+//   while(node !== null){
+//     if(key === node.key)
+//     {
+//       return node;
+//     }else if(key < node.key){
+//       node = node.left;
+//     }else{
+//       node = node.right;
+//     }
+//   }
+//  return false;
+// }
+// //二叉搜索树的删除
+// // BST.prototype.remove = function(key){
+ 
+// //   //先保存该节点的父节点，判断其是左节点还是右节点
+// //   let isLeftChild = true;
+// //   let parent = null;
+// //   let node = this.root;
+// //   //先找到该节点，并得知其是左节点还是右节点，保存其父节点
+// //   if(node !== null){
+// //     while(node.key !== key )//没找到就一直循环
+// //   parent = node;
+// //   if(key < node.key){
+// //     isLeftChild = true;
+// //     node = node.left;
+// //   }else{
+// //     isLeftChild = false;
+// //     node = node.right;
+// //   }
+// //   }
+// //   return false;
+  
+
+// //   //情况1:删除的是叶子节点
+// //   // if(node.left === null && node.right === null)
+// //   // {
+// //   //   if(node === this.root){//且该叶子节点是根节点（也就是一棵只有根的树）
+// //   //     this.root = null//删除根
+// //   //   }
+// //   //   //该叶子节点不是根节点
+// //   // }
+
+// // }
+// // 删除结点
+// BST.prototype.remove = function (key) {
+//   let node = this.root;
+//   let parent = null;
+//   let isLeftChild = false;
+//   if(this.root === null){
+//     return false
+//   }
+//   while(node.key !== key){
+//     parent = node;
+//     if(key < node.key){
+//       isLeftChild = true;
+//       node = node.left;
+//     }else{
+//       node = node.right;
+//     }
+//     if(node === null){
+//       return false;
+//     }
+//   }
+//   // console.log(node,parent,isLeftChild);
+//   //情况1：要删除的是叶子节点
+//   //要删除的是根节点
+//   if(node.left === null && node.right === null){
+//     if(node === this.root){
+//       this.root = null;//将根节点置为null即可   
+//     }
+//     //删除的是其他叶子节点
+//     else if(isLeftChild){
+//       parent.left = null
+//     }else{
+//       parent.right = null;
+//     }
+//     console.log('被删除的叶子节点（或根节点）是' + node.key);
+//     return node;
+//   }
+//   //情况2：要删除的是只有一个子节点的节点
+//   else if(node.left === null || node.right === null){
+//     //先判断该节节点的唯一子节点是左节点还是右节点
+//     if(node.left !== null){//要删除节点只有左节点
+//       //再判断该节点是根节点吗
+//       if(node === this.root){
+//         console.log('要删除的是根节点');
+//         this.root = node.left
+//       }else{//不是根节点
+//         if(isLeftChild){//该节点是其父节点的左节点还是右节点？
+//           parent.left = node.left
+//           console.log(`该左节点${node.key}已经被删除，其子节点（左）${node.left.key}替代了他`);
+//         }else{
+//           parent.right = node.left
+//           console.log(`该右节点${node.key}已经被删除，其子节点（左）${node.left.key}替代了他`);
+//         }
+//       }
+//     }else{//要删除的节点只有右节点
+//       if(node === this.root){
+//         console.log('要删除的是根节点');
+//         this.root = node.right
+//       }else{//不是根节点
+//         if(isLeftChild){//该节点是其父节点的左节点还是右节点？
+//           parent.left = node.right
+//           console.log(`该左节点${node.key}已经被删除，其子节点（右）${node.right.key}替代了他`);
+//         }else{
+//           parent.right = node.right
+//           console.log(`该右节点${node.key}已经被删除，其子节点（右）${node.right.key}替代了他`);
+//         }
+//       }
+//     }
+// }
+// //情况3：要删除的是有两个子节点的节点
+// /*
+// 我们发现一个规律，用来替换当前要删除的节点的那个节点，它的key值和当前要删除节点（current节点）
+// 的key值相差最小!
+// 可以比他大也可以比他小。
+// */
+// else {//用其前驱或者后继将其替换
+// //使用后继替换
+//  // 1.获取后继节点
+//  let successor = this.getSuccessor(node)//这里面判断了后继是不是其右节点
+// // 2.判断是否是根节点
+// if (node == this.root) {
+//     this.root = successor
+// } else if (isLeftChild) {
+//     parent.left = successor
+// } else {
+//     parent.right = successor
+// }
+// // 3.将删除节点的左子树赋值给successor
+// successor.left = node.left
+// }
+// console.log(`节点${node.key}已经被删除,其后继节点${successor.key}替换了它`);
+// return true;
+
+// }
+
+// //首先需要找前驱或者后继（和当前要删除的节点相差最小的两个节点，前驱小于当前节点，后继大于当前节点）
+
+// //找前驱其实就是找其左子树的最大值
+// function getPrecursor(node){
+//   let Precursor = node.left;//从左子树开始找，找最大值
+//   let result = null;
+//   while( Precursor!== null){
+//     result = Precursor;
+//     Precursor = Precursor.right;
+//     // console.log('找前驱');
+//   }
+//   return result;
+// }
+// //查询key对应节点的前驱
+// BST.prototype.getPrecursorByKey = function(key){
+//   let node = this.root;
+//   while(node !== null){
+//     if(key === node.key)
+//     {
+//       return getPrecursor(node);
+//     }else if(key < node.key){
+//       node = node.left;
+//     }else{
+//       node = node.right;
+//     }
+//   }
+//  return false;
+// }
+// //找后继其实就是找其右子树的最小值
+// function getSuccessor(node){
+//   let successorParent = node;//为了方便删除操作，还要保存后继的父节点
+//   let Seccessor = node;
+//   let current = node.right;//从右子树开始找，找最小值
+//   while( current !== null){
+//     successorParent = Successor
+//     Successor = current;
+//     current = current.left;
+//   }
+//   //结合删除节点的操作,判断后继节点是不是要删除节点的右节点
+//   //如果是的话，直接用后继替换掉要删除的节点即可，如果不是则此时后继的右子节点
+//   //移交给后继的父节点的左节点，此时后继节点的右节点（目前没有指向任何节点）再指向删除节点
+//   //的右节点即可。然后令删除节点 = 后继节点
+//   if(Successor !== node.right){
+//     successorParent.left = Successor.right
+//     Successor.right = node.right
+//   }
+//   return Seccessor;
+// }
+
+// //查询key对应节点的后继
+// BST.prototype.getSuccessorByKey = function(key){
+//   let node = this.root;
+//   while(node !== null){
+//     if(key === node.key)
+//     {
+//       return getSuccessor(node);
+//     }else if(key < node.key){
+//       node = node.left;
+//     }else{
+//       node = node.right;
+//     }
+//   }
+//  return false;
+// }
+
+// // 删除结点
+// BST.prototype.remove1 = function (key) {
+//     // 1.定义临时保存的变量
+//     let current = this.root
+//     let parent = this.root
+//     let isLeftChild = true
+
+//     // 2.开始查找节点
+//     while (current.key !== key) {
+//         parent = current
+//         if (key < current.key) {
+//             isLeftChild = true
+//             current = current.left
+//         } else {
+//             isLeftChild = false
+//             current = current.right
+//         }
+
+//         // 如果发现current已经指向null, 那么说明没有找到要删除的数据
+//         if (current === null) return false
+//     }
+
+//     // 3.删除的结点是叶结点
+//     if (current.left === null && current.right === null) {
+//         if (current == this.root) {
+//             this.root == null
+//         } else if (isLeftChild) {
+//             parent.left = null
+//         } else {
+//             parent.right = null
+//         }
+//     }
+
+//     // 4.删除有一个子节点的节点
+//     else if (current.right === null) {
+//         if (current == this.root) {
+//             this.root = current.left
+//         } else if (isLeftChild) {
+//             parent.left = current.left
+//         } else {
+//             parent.right = current.left
+//         }
+//     } else if (current.left === null) {
+//         if (current == this.root) {
+//             this.root = current.right
+//         } else if (isLeftChild) {
+//             parent.left = current.right
+//         } else {
+//             parent.right = current.right
+//         }
+//     }
+
+//     // 5.删除有两个节点的节点
+//     else {
+//         // 1.获取后继节点
+//         let successor = this.getSuccessor(current)
+
+//         // 2.判断是否是根节点
+//         if (current == this.root) {
+//             this.root = successor
+//         } else if (isLeftChild) {
+//             parent.left = successor
+//         } else {
+//             parent.right = successor
+//         }
+
+//         // 3.将删除节点的左子树赋值给successor
+//         successor.left = current.left
+//     }
+
+//     return true
+// }
+
+// 找后继的方法
+// BST.prototype.getSuccessor = function (delNode) {
+//     // 1.使用变量保存临时的节点
+//     let successorParent = delNode
+//     let successor = delNode
+//     let current = delNode.right // 要从右子树开始找
+
+//     // 2.寻找节点
+//     while (current != null) {
+//         successorParent = successor
+//         successor = current
+//         current = current.left
+//     }
+
+//     // 3.如果是删除图中15的情况, 还需要如下代码
+//     if (successor != delNode.right) {
+//         successorParent.left = successor.right
+//         successor.right = delNode.right
+//     }
+    
+//     return successor
+// }
+
+// //测试
+// let bst = new BST();
+// bst.insert(11)
+// bst.insert(7)
+// bst.insert(15)
+// bst.insert(5)
+// bst.insert(3)
+// bst.insert(9)
+// bst.insert(8)
+// bst.insert(10)
+// bst.insert(13)
+// bst.insert(12)
+// bst.insert(14)
+// bst.insert(20)
+// bst.insert(18)
+// bst.insert(25)
+// // console.log(bst.getPrecursorByKey(9));
+// // console.log(bst.getSuccessorByKey(10));
+// // console.log(bst.getSuccessorByKey(15));
+
+// // console.log(bst);
+// // console.log(bst.getNodeByKey(0));
+// bst.remove(15);
+// console.log(bst);
+// console.log('先序遍历');
+// 测试前序遍历结果
+// let  resultString = ""
+// bst.POT(function (key) {
+//     resultString += key + " ";
+// })
+// bst.postOT(function (key) {
+//     resultString += key + " ";
+// })
+// console.log(resultString) // 11 7 5 3 6 9 8 10 15 13 12 14 20 18 25
+// console.log(bst.pot());
+// console.log(bst.mot());
+// console.log(bst.lot());
+// console.log(bst.levelOT());
+// bst.levelOrderTraversal()
+// console.log(bst.getMaxKey());
+// console.log(bst.getMinKey());
+
+//图数据结构
+// function Graph(){
+//   this.vertexes = [];//保存顶点
+//   this.edges = new Map();//保存边，key对应该顶点，value[]保存和该顶点相连的顶点，两者构成边
+// }
+// //添加顶点
+// Graph.prototype.addVertex = function(vertex){
+//   this.vertexes.push(vertex);
+//   this.edges.set(vertex,[])
+// }
+// //添加边
+// Graph.prototype.addEdge = function(vertex1,vertex2){
+//   this.edges.get(vertex1).push(vertex2);
+//   this.edges.get(vertex2).push(vertex1);
+// }
+// //toString方法
+// Graph.prototype.toString = function(){// A -->B,C,D 
+//   //定义一个变量来接收结果
+//   let result = '';
+//   for(let i = 0; i < this.vertexes.length; i++){
+//     let vertex = this.vertexes[i];//先获取到顶点
+//     let edges = this.edges.get(vertex);//根据顶点拿到保存边的数组
+//     result += vertex + '-->' + edges.join() + '\n';
+//   }
+//   return result;
+// }
+// //图的遍历方法
+// Graph.prototype.initialColors = function(){
+//   let colors = []
+// }
+//二叉搜索树的层次遍历
+// BST.prototype.levelOT = function(){
+//   let node = this.root;
+//   let queue = [];
+//   let result = [];
+//   if(this.root === null){
+//     return false
+//   }
+//   queue.push(node);
+//   while(queue.length !== 0){
+//     node = queue.shift();
+//     result.push(node.key);
+//     if(node.left !== null){
+//       queue.push(node.left);
+//     }
+//     if(node.right !== null){
+//       queue.push(node.right);
+//     }
+//   }
+//   return result;
+// }
+//BFS（广度优先遍历）不重复的遍历顶点
+// //非递归方法
+// Graph.prototype.BFS = function(){
+//   let queue = [];
+//   let result = [];
+//   let vertex = this.vertexes[0];
+//   queue.push(vertex);
+//   while(queue.length !== 0){
+//     vertex = queue.shift();
+//     if(!result.includes(vertex)){
+//       result.push(vertex);
+//     }
+//     let edges = this.edges.get(vertex);  
+//     while(edges.length !== 0){
+//       queue.push(edges[0]);
+//       edges.shift();
+//     }
+//   }
+//   console.log(result);
+// }
+// //DFS深度优先遍历
+// Graph.prototype.DFS = function(){
+//   let stack = [];
+//   let result = [];
+//   let vertex = this.vertexes[0];
+//   stack.push(vertex);
+//   while(stack.length !== 0){
+//     if(!result.includes(vertex)){
+//       result.push(vertex);
+//     }
+//     let edges = this.edges.get(vertex).reverse();//关键一步,也破坏了原来的数据结构
+//     while(edges.length !== 0){
+//       stack.push(edges[0]);
+//       edges.shift()//破坏了原来的数据结构
+//     }
+//     vertex = stack.pop();
+//   }
+//   console.log(result);
+
+//   return result;
+
+// }
+
+TODO:'颜色标记法遍历图' 
+
+// Graph.prototype.dfs = function(){
+//     let nodes = [];
+//     let node = this.vertexes[0]
+//     if (node != null) {
+//         let stack = [];
+//         stack.push(node);
+//         while (stack.length != 0) {
+//         let item = stack.pop();
+//         nodes.push(item);
+//         let children = this.edges.get(node);
+//         for (let i = children.length - 1; i >= 0; i--)
+//             stack.push(children[i]);
+//         }
+//     }
+//     console.log(nodes);
+// }
+//测试
+// // 测试代码
+// let graph = new Graph()
+
+// // 添加顶点
+// let myVertexes = ["A", "B", "C", "D", "E", "F", "G", "H", "I"]
+// for (let i = 0; i < myVertexes.length; i++) {
+//     graph.addVertex(myVertexes[i])
+// }
+
+// // 添加边
+// graph.addEdge('A', 'B');
+// graph.addEdge('A', 'C');
+// graph.addEdge('A', 'D');
+// graph.addEdge('C', 'D');
+// graph.addEdge('C', 'G');
+// graph.addEdge('D', 'G');
+// graph.addEdge('D', 'H');
+// graph.addEdge('B', 'E');
+// graph.addEdge('B', 'F');
+// graph.addEdge('E', 'I');
+// console.log(graph.toString());
+// graph.DFS()
+// // graph.BFS()
+
+// console.log(graph.toString());
+
+// alert(graph)
+
+//排序算法，参数都是一个无序数组,从小到大排序
+//交换位置的方法封装
+Array.prototype.swap = function(m,n){
+  let temp = this[m];
+  this[m] = this[n];
+  this[n] = temp;
+}
+// let a = [1,2,3,4];
+// a.swap(1,3);
+// console.log(a);
+
+//1.冒泡排序
+// function bubbleSort(array){
+//   for(let i = array.length -1; i >= 0; i--){
+//     for(let j = 0; j < i; j++){
+//       if(array[j] > array[j+1]){
+//         array.swap(j,j+1)
+//       }
+//     }
+//   }
+//   console.log('冒泡排序');
+//   return array;
+// }
+// //选择排序
+// function selectionSort(array){
+//   for(let i = 0; i < array.length -1; i++){//i不能为length-1 否则j会越界
+//   let min = i;
+//     for(let j = min +1 ; j < array.length; j++){
+//       if(array[min] > array[j]){//比较次数和冒泡排序一样
+//         min = j;
+//         // console.log(min);
+//       }
+//     }
+//     array.swap(i,min);//但是只交换了n-1次
+//   }
+//   console.log('选择排序');
+//   return array;
+// }
+// //插入排序，局部有序
+// function insertionSort(array){
+//   for(let i = 1; i < array.length; i++){
+//     let temp = array[i];
+//     let j = i;
+//     while(array[j-1] > temp && j > 0){
+//       // array[j] = array[j-1];
+//       array.swap(j,j-1)
+//       j--;
+//     }
+//     // array[j] = temp;
+//   }
+//   return array;
+// }
+
+// //高级排序
+// //希尔排序，分组，逐步减少间隔，设置间隔为每次分组间隔的一半
+// function shellSort(array){
+//     let gap = Math.floor(array.length / 2);
+//     while (gap > 0) {
+//         for (let i = gap; i < array.length; i++) {
+//              let j = i;
+//              let temp = array[i]
+//             while (j > 0 && array[j - gap] > temp) {
+//                array[j] = array[j - gap]
+//                j -= gap
+//             }
+//             array[j] = temp
+//         }
+//         gap = Math.floor(gap / 2)
+//     }
+//     return array;
+// }
+// //快速排序
+// let quickSort = function(arr){
+//   if (arr.length <= 1) 
+//   { return arr; }
+//   var pivotIndex = Math.floor(arr.length / 2);//选取数组中间的数做基准
+//   var pivot = arr.splice(pivotIndex,1)[0];
+//   var left = [];
+//   var right = [];
+//   for(var i = 0; i < arr.length; i++){
+//     if(arr[i] < pivot){
+//       left.push(arr[i]);
+//     }
+//     else{
+//       right.push(arr[i])
+//     }
+//   }
+//   return quickSort(left).concat([pivot],quickSort(right));
+// }
+// //归并排序
+// function merge(leftArr, rightArr){  
+//     var result = [];  
+//     while (leftArr.length > 0 && rightArr.length > 0){  
+//       if (leftArr[0] < rightArr[0])  
+//         result.push(leftArr.shift()); //把最小的最先取出，放到结果集中   
+//       else   
+//         result.push(rightArr.shift());  
+//     }   
+//     return result.concat(leftArr).concat(rightArr);  //剩下的就是合并，这样就排好序了  
+// }  
+
+// function mergeSort(array){  
+//     if (array.length == 1) return array;  
+//     var middle = Math.floor(array.length / 2);       //求出中点  
+//     var left = array.slice(0, middle);               //分割数组  
+//     var right = array.slice(middle);  
+//     return merge(mergeSort(left), mergeSort(right)); //递归合并与排序  
+// }  
+
+// var arr = mergeSort([32,12,56,78,76,45,36]);
+// console.log(arr);   // [12, 32, 36, 45, 56, 76, 78]
+// //测试
+// let testArray = [23,13,10,76,7,4]
+// // console.log(bubbleSort(testArray));
+// // console.log(selectionSort(testArray));
+// // console.log(insertionSort(testArray));
+// // console.log(shellSort(testArray));
+// console.log(quickSort(testArray));
+
+// console.log(Number((['1','2'].valueOf()).toString()));
+// console.log(Number('1'));
+console.log({}.valueOf());
+
+// console.log(ToPrimitive(1));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>
