@@ -34,11 +34,11 @@ sum(1,'hello')
 
 此时TS会报错
 
-![image-20210721191740981](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210721191740981.png)
+![image-20210722101638384](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210722101638384.png)
 
 这样就能将运行时才发现的错误,提前到编译前就暴露,提高了代码的健壮性,减少了bug🐛出现的概率
 
-除此之外,TS还对JS有其他的扩展,我们可以再一点点了解😃
+除此之外,TS还对JS有其他的扩展,比如接口、泛型、枚举类型等，我们可以再一点点了解😃
 
 ### 1.环境搭建：
 
@@ -92,103 +92,132 @@ hello TS
 
 ### 2.基础语法
 
-##### 1.基础类型：
+##### 基础类型：
 
-###### 
+JS中的数据类型 `number`,`string`,`boolean`,`symbol`,`undefined`,`null`以及`object`在TS中都有相对应的数据类型
 
-可以使用var let const 定义
+> 📍注意,TS区分大小写字符,这里的string是小写的，和String是有区别的,根据官方手册的说法👇
+>
+> The type names `String`, `Number`, and `Boolean` (starting with capital letters) are legal, but refer to some special built-in types that will very rarely appear in your code，*Always* use `string`, `number`, or `boolean` for types.  [🔗](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)
+>
+> 这些大写开头的类型虽然是合法的，但是指的是一些特殊的内置类型，我们很少用到，所以在注解类型时，都使用**小写字母开头**的单词
 
-语法： `var/let/const 标识符: 数据类型 = 赋值;`
+除了这些数据类型，TS还提供了以下几种类型
 
-> 📍注意,TS区分大小写字符,这里的string是小写的，和String是有区别的, string是TypeScript中定义的字符串类型，String是ECMAScript中定义的一个类
+- any
 
-这里的count还继承了Number类的方法：
+  如果一个值的类型为any时，则表示它可以是任意类型，不论对它赋什么值，TS都不会报错，如果你没有声明一个值的类型，TS也无法对它进行推断的话，编译器会将其默认为any类型.
 
-![image-20201015155434880](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015155434880.png)
+  ```typescript
+  let d : any = 4;
+  d = 'four';
+  d = {forth:'four'};
+  //不会报错
+  ```
 
-###### 对象静态类型：
+- void
 
-包括对象，数组，函数，类
+   用于标识方法返回值的类型，表示该方法没有返回值。[🔗菜鸟教程](https://www.runoob.com/typescript/ts-type.html)
 
-对象：
+- never
 
-![image-20201015160605617](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015160605617.png)
+  表示永远不会出现的值
 
-数组：
+- enum
 
-![image-20201015160845647](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015160845647.png)
+  枚举类型于声明**一组**命名的**常数**，当一个变量有几种可能的取值时，可以将它定义为枚举类型 [🔗百度百科](https://baike.baidu.com/item/%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B/2978296?fr=aladdin)
 
-![image-20201015161011838](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015161011838.png)
+  使用枚举类型可以增强程序的可读性
+
+  ```typescript
+  enum Day {Monday,Tuesday,Wednesday}
+  console.log(Day.Monday,Day.Tuesday,Day.Wednesday)
+  //输出0 1 2 
+  ```
+
+  枚举成员的值默认从 `0`开始，在定义时可以指定枚举成员的值，（允许枚举值相同）通过枚举的值，也能访问枚举名
+
+  ```typescript
+  enum Day {Monday = 1,Tuesday,Wednesday}
+  console.log(Day[2])
+  //输出Tuesday
+  ```
 
 类：
 
 ![image-20201015161120305](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015161120305.png)
 
-函数：
 
-![image-20201015161224281](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015161224281.png)
 
-### 3.类型注解和类型推断：
+##### 类型注解
 
-type annotation 类型注解：就是指定该属性必须是什么类型。
+type annotation 
 
-![image-20201015161530275](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015161530275.png)
+在声明一个变量时，可以为该变量添加一个注解 ，格式为`变量 : 类型`（如：`let count : number`；）
 
-type inference  类型推断：
+类型注解是可选的，TS会根据你对变量的赋值自动推断变量的类型（type inference ，类型推断），所以不是总需要写类型注解，不过对于一些复杂情况，还是尽量写上类型注解吧😗
 
- 通过你的代码 TS 会自动的去尝试分析变量的类型。 
+- `普通变量`
 
-![image-20201015162125647](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015162125647.png)
+  ```typescript
+  const num : number = 1;
+  const sayHi: string = 'hello';
+  let result: boolean = false;
+  let god : any;
+  let what : undefined;
+  let none : null;
+  let moon : symbol = Symbol("moon");
+  ```
 
-因为TS会自动推断变量的类型，是不是意味着我们就可以不使用类型注解来定义变量了呢？
+- `普通对象`
 
-需要分情况：
+  ```typescript
+  const dog: {
+    name:string;
+    age:number
+  } = { //初始化的对象，属性名只能为name或age，属性不能缺失
+    name:"buddy", //name的类型必须为string
+    age:2 //age的类型必须为number
+  }
+  ```
 
-- 如果 `TS` 能够自动分析变量类型， 我们就什么也不需要做了
+- `数组`
 
-```js
-const one = 1;
-const two = 2;
-const three = one + two;
-```
+  ```typescript
+  let cats : string [] =['dora','kitty'] //数组内的元素只能为string类型
+  ```
 
-- 如果 `TS` 无法分析变量类型的话， 我们就需要使用类型注解
+- `参数注解`
 
-下图因为传入的参数可以是anyType任意类型，所以TS无法进行类型推断
+  TS也支持为方法的参数及其返回值添加类型注解
 
-```js
-function getTotal(one, two) {
-  return one + two;
-}
+  ```typescript
+  // Parameter type annotation
+  function greet(name: string) {
+    console.log("Hello, " + name.toUpperCase());
+  }
+  //当传入非string类型的参数时，TS会提示参数类型错误
+  ```
 
-const total = getTotal(1, 2);
-```
+  并且，TS还会自动检查传入参数的个数是否正确，当参数个数不符合时，也会报错。
 
- 这种形式，就需要用到类型注释了，因为这里的`one`和`two`会显示为`any`类型。这时候如果传字符串，业务逻辑就是错误的，必须加一个`类型注解`，把上面的代码写成下面的样子。 
+- `返回值注解`
 
-```js
-function getTotal(one: number, two: number) {//类型注解
-  return one + two;
-}
-
-const total = getTotal(1, 2);
-```
+  ```typescript
+  function getFavoriteNumber(): number {
+    return 88;
+  }
+  ```
 
 **16：30**  pause
 
 **18：30**  start
 
-### 4.函数参数的注解和其返回值的注解：
 
-上面的函数实现了两个数字的相加，虽然保证了传入的值不会是其他类型，但是如果我们在编写代码时失误(见下图)，将计算结果转换成了字符串，这样得到的结果就不是number类型了。
 
-为了避免这种情况，提高程序的健壮性，我们可以对函数的返回值也注解为number类型，这样当我么返回结果的代码不是number类型，TS的编译器就会直接报错，避免我们后期还要检查，调试错误。
 
-![image-20201015184433946](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015184433946.png)
 
-没有返回值的函数注解:
 
-![image-20201015184912547](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201015184912547.png)
 
 死循环的函数注解：
 
@@ -438,15 +467,7 @@ Day 01 结束：2020.10.15 22：50 进度：18P结束
 
 ### 1.Enum枚举类型：
 
-增强程序的可读性，（语义化），简化编程。
 
-![image-20201016124244113](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201016124244113.png)
-
-知道枚举的下标也可以直接通过下标访问到枚举属性：
-
-![image-20201016124439155](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201016124439155.png)
-
-![image-20201016123953031](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201016123953031.png)
 
 ### 2.在Typescript中使用泛型：
 
