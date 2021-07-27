@@ -475,11 +475,94 @@ configure("auto");
 
 `true`和`false`也是一种字面量（布尔字面量）
 
+需要注意的是,当声明一个对象的属性时, TS会假定属性的值之后会被修改,比如下面的代码, TS会推断`counter`是 `number` 类型,而不是字面量类型 `0 ` ,所以对属性`counter` 的修改是合法的
+
+```typescript
+const obj = { counter: 0 };
+if (someCondition) {
+  obj.counter = 1;
+}
+```
+
+对于字符串类型也是一样,如下代码,方法 `handleRequest` 要求第二个参数只能是 `"GET"`, `"POST"`字符串中的一个(即字面量联合类型` "GET"|"POST"`), 此时我们将对象 req 的属性 method 作为  handleRequest  的第二个参数,TS会报错, 因为TS推断  `req.method` 为 string类型  , 而不是` "GET"|"POST"`类型
+
+```typescript
+const req = { url: "https://example.com", method: "GET" };
+handleRequest(req.url, req.method); //报错
+```
+
+解决这个报错的方法有两个
+
+1.在以下任意一个位置添加类型断言
+
+```typescript
+//  1:
+const req = { url: "https://example.com", method: "GET" as "GET" }; //将属性method断言为字面量'GET'类型
+//  2:
+handleRequest(req.url, req.method as "GET"); //表示此处的 req.method 具有值 "GET"
+```
+
+2.在定义req对象时,添加 `as const` 后缀,这样能确保它的所有属性都是字面量类型
+
+```typescript
+const req = { url: "https://example.com", method: "GET" } as const;
+handleRequest(req.url, req.method); //ok
+```
+
 ### 10.null和undefined
 
-> so it’s important to only use `!` when you know that the value *can’t* be `null` or `undefined`.
+TS中`null`  和 `undefined` 的表现取决于配置 项`strictNullChecks`
+
+- strictNullChecks `off`
+
+  任意类型的属性,变量都可以赋值为null 和 undefined
+
+  ```typescript
+  let i = 1
+  // ok
+  i = undefined
+  // ok
+  i = null
+  ```
+
+- strictNullChecks `on`
+
+  当 strictNullChecks  设置为 true时 , 不能将 `null` 或 `undefined` 赋值给其他类型
+
+  ```typescript
+  let i = 1
+  // Type 'undefined' is not assignable to type 'number'
+  i = undefined
+  // Type 'null' is not assignable to type 'number'
+  i = null
+  ```
+
+  且使用值为null 或者 undefined的参数,或对象的属性值时,需要对其进行判断(检查),比如:
+
+  ```typescript
+  function doSomething(x: string | null) {
+    if (x === null) {
+      // do nothing
+    } else {
+      console.log("Hello, " + x.toUpperCase());
+    }
+  }
+  ```
+
+  TS也提供了一个特殊的语法 -后缀`!` ,  (非空断言操作符),   写在变量后,起到一个断言的作用,表示该值不是`null ` 或者 `undefined`, 这样就不必专门写一个判断来检查值是否为空了.
+
+  如
+
+  ```typescript
+  function liveDangerously(x?: number | null) {
+    // No error
+    console.log(x!.toFixed());
+  }
+  ```
 
 ## 3.泛型
+
+
 
 ## 4.类
 

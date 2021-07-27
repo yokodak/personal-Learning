@@ -375,7 +375,7 @@ Day 01 结束 2020.10.10 23：00 进度：32P结束
 
 ![image-20201011133105170](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20201011133105170.png)
 
-==question== 为什么没有调用toString方法也能遍历双向链表为字符串，第一行alert(list)
+question 为什么没有调用toString方法也能遍历双向链表为字符串，第一行alert(list)
 
 answer:  toString方法（在使用alert时）会自动调用
 
