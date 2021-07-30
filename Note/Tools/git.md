@@ -8,7 +8,7 @@
 >
 > 📄：📌/🔗表示该段引用自外部链接
 
-### 基本介绍
+## 基本介绍
 
 这里要用通俗易懂的语句描述git的作用
 
@@ -20,16 +20,16 @@ git快的原因
 
 📍 git采用分布式存储,每台电脑都可以从服务器克隆完整的代码仓库( **[github](https://github.com/)** 为开源项目免费提供代码托管),这样代码仓库能分布在不同的电脑上,即使服务器的代码仓库损坏,也能从其他电脑获取代码
 
-### 基础使用
+## 基础使用
 
-#### 版本管理
+### 版本管理
 
 - “ [] ”表示可选选项
 - git会对用户进行操作指引,有对应需要则按照提示操作即可，如👇
 
 > <img src="https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210713191828548.png" alt="image-20210713191828548" style="zoom: 150%;" />
 
-###### 1.创建版本库
+#### 1.创建版本库
 
 ```bash
 git init #在本地文件目录(工作区)下执行该命令,创建本地版本库
@@ -47,7 +47,7 @@ git init #在本地文件目录(工作区)下执行该命令,创建本地版本�
 
 GitHub 有一个十分详细的针对数十种项目及语言的 `.gitignore` 文件列表， 你可以在 https://github.com/github/gitignore 找到它。
 
-###### **2.添加文件到暂存区**
+#### **2.添加文件到暂存区**
 
 电脑上的目录即**工作区**(working Directory) ，工作区下的.git文件夹是git的**版本库**(Repository)，版本库中有**暂存区**（staging Area）即`.git/index`，在工作区新建一个文件`readme.txt` , 之后使用命令
 
@@ -84,37 +84,7 @@ git add readme.txt  #将readme.txt文件添加到暂存区
 >
 > 如果没有暂存区，要么一次性提交就会提交所有工作区的文件，要么每次都需要找到要提交的文件，一个个添加到commit命令后，过于繁琐。现在有暂存区了，只需要将要提交的文件存到暂存区，然后`git commit` 一次性提交即可
 
-###### **3.提交文件到仓库**
-
-```bash
-git add [fileName1][fileName2][..] #将文件添加到暂存区
-git commit [fileName1] [...] - m "message" #提交文件到本地版本库
-git commit -m "message"#一次性提交所有暂存区的文件到版本库
-```
-
-📍 git commit 命令**只提交暂存区的内容** , 所以每次修改后，如果需要更新到版本库，就要进行暂存操作
-
-👉第一次修改 -> `git add` -> 第二次修改 -> `git add` -> `git commit`
-
-如果觉得每次修改后都要`git add` 比较麻烦,可以使用 `git commit -a `命令,跳过暂存区,直接提交**已经跟踪过**的文件.(未跟踪的文件不会被提交)
-
-虽然比较方便, 不过也需要注意,使用这个命令,那些修改了但是还不想提交的文件也会被无差别地提交到版本库.
-
-**💎git的基本操作流程**
-
-> 📌 The basic Git workflow goes something like this:
->
-> 1. You modify files in your working tree.
-> 2. You selectively stage just those changes you want to be part of your next commit, which adds *only* those changes to the staging area.
-> 3. You do a commit, which takes the files as they are in the staging area and stores that snapshot permanently to your Git directory. [🔗来源](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F)
->
-> 基本的git流程如下
->
-> 1. 在工作区内修改了文件
-> 2. 有选择性的 将想要提交到版本库的修改 添加到暂存区
-> 3. 进行提交操作后,会将暂存区的文件的[快照](#快照(snapshot))永久的保存到版本库
-
-###### **4.查看信息**
+#### **3.查看信息**
 
 - **查看状态报告**
 
@@ -140,22 +110,30 @@ no changes added to commit (use "git add" and/or "git commit -a")
 还可以通过`git status -s `命令以更简洁的形式输出状态报告,文件名前有两栏，**左**栏表示**暂存**区的状态，**右**栏表示**工作**区的状态，`A` 表示该文件新添加到暂存区， `M` 表示该文件已修改，`??`表示新添加的未跟踪文件。[🔗](https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-%E8%AE%B0%E5%BD%95%E6%AF%8F%E6%AC%A1%E6%9B%B4%E6%96%B0%E5%88%B0%E4%BB%93%E5%BA%93)
 
  ```bash
- git status -s
-  M README
- MM Rakefile
- A  lib/git.rb
- M  lib/simplegit.rb
- ?? LICENSE.txt
+git status -s
+ M README
+MM Rakefile
+A  lib/git.rb
+M  lib/simplegit.rb
+?? LICENSE.txt
  ```
 
 上面的状态报告显示： `README` 文件在工作区已修改但尚未暂存，而 `lib/simplegit.rb` 文件已修改且已暂存。 `Rakefile` 文件已修改，暂存后又作了修改，因此该文件的修改中既有已暂存的部分，又有未暂存的部分。
 
 - **查看修改** 
 
-要查看尚未暂存的文件更新了哪些部分，不加参数直接输入 `git diff`
+修改文件后 , 要查看文件更新了哪些部分，直接输入 `git diff` 如：
 
 ```bash
-git diff  #显示尚未暂存的改动
+git diff 
+#输出
+diff --git a/test.txt b/test.txt #这一行表示对比两个文件的区别，a表示修改前，b表示修改后
+index 4309ccc..6c77a27 100644    #4309ccc..6c77a27分别表示两个文件的SHA-1值 100644表示普通文件
+--- a/test.txt   # --- 表示修改前
++++ b/test.txt   # +++ 表示修改后
+@@ -1 +1,2 @@    # -1 表示修改前的文件只有一行， +1，2 表示修改后文件从第一行到第二行
+ hello,git       #这一行是原文件内容
++我是已跟踪的文件，现在修改后还没有暂存  #这一行是修改后的内容（默认设置下绿色显示）
 ```
 
 如果要查看已暂存文件与最新一次提交的差异，可以加上参数`--staged `或 `--cached` 
@@ -164,7 +142,71 @@ git diff  #显示尚未暂存的改动
 git diff --staged #显示暂存文件和最新一次提交的差异
 ```
 
-- **查看提交日志**
+
+
+#### 4.撤销修改
+
+```bash
+git restore file 
+#或
+git checkout -- file #注意命令有"--" 不然 git checkout命令会执行切换分支
+```
+
+丢弃工作区的修改,让文件回到最近一次 `git commit `(下 1  )或  `git add`  (下 2 )的状态
+
+1. 如果文件修改后,还未添加到暂存区,撤销则恢复到版本库的状态
+
+2. 文件已经添加到暂存区后再修改,执行撤销命令则恢复到添加到暂存区后的状态
+
+如果文件已经被修改且添加到暂存区了,想要将文件重新放回工作区(撤销暂存)👇
+
+之后想要放弃修改,按照上面👆的步骤1操作即可
+
+```bash
+git restore --staged <file>
+#或者
+git reset HEAD <file>
+```
+
+
+
+#### **5.提交文件到仓库**
+
+```bash
+git add [fileName1][fileName2][..] #将文件添加到暂存区
+git commit [fileName1] [...] - m "message" #提交文件到本地版本库
+git commit -m "message"#一次性提交所有暂存区的文件到版本库
+```
+
+📍 `git commit` 命令**只提交暂存区的内容** , 所以为了避免文件的修改丢失，每次修改后，如果需要更新到版本库，就要进行暂存操作
+
+👉第一次修改 -> `git add` -> 第二次修改 -> `git add` -> `git commit`
+
+如果觉得每次修改后都要`git add` 比较麻烦,可以使用 `git commit -a `命令,跳过暂存区,直接提交**已经跟踪过**的文件.(未跟踪的文件不会被提交)
+
+虽然比较方便, 不过也需要注意,使用 `git commit -a `命令,那些修改了但是还不想提交的文件也会被无差别地提交到版本库.
+
+在安装`git` 时，有一个设置 `git` 编辑器的步骤，当提交命令 `git commit ` 没有带上参数 `-m ` 来输入提交说明时，`git ` 会启动你设置的编辑器，要求你输入提交说明
+
+>可以使用 `git config --global core.editor` 命令设置你喜欢的编辑器。
+
+现在我们已经熟悉 `git` 的基本操作流程了，借助`git add `, `git commit` ，`git restore` ,`git status` 等命令，已经能实现基本的版本控制啦，恭喜🎉（这段应该写在切换版本后吧？包括下面段）
+
+**💎git的基本操作流程**
+
+> 📌 The basic Git workflow goes something like this:
+>
+> 1. You modify files in your working tree.
+> 2. You selectively stage just those changes you want to be part of your next commit, which adds *only* those changes to the staging area.
+> 3. You do a commit, which takes the files as they are in the staging area and stores that snapshot permanently to your Git directory. [🔗来源](https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F)
+>
+> 基本的git流程如下
+>
+> 1. 在工作区内修改了文件
+> 2. 有选择性的 将想要提交到版本库的修改 添加到暂存区
+> 3. 进行提交操作后,会将暂存区的文件的快照永久的保存到版本库
+
+- **查看提交日志** (这部分应该放到提交之后)
 
 *待更新
 
@@ -177,31 +219,7 @@ b4bc514 HEAD@{1}: commit: modified and added
 #前面的字符串就是版本号
 ```
 
-###### 5.撤销修改
-
-```bash
-git restore file 
-#或
-git checkout -- file #注意命令有"--" 不然 git checkout命令会执行切换分支
-```
-
-丢弃工作区的修改,让文件回到最近一次git commit (下1)或 git add (下2)的状态
-
-1. 如果文件修改后,还未添加到暂存区,撤销则恢复到版本库的状态
-
-2. 文件已经添加到暂存区后再修改,执行撤销命令则恢复到添加到暂存区后的状态
-
-如果文件已经被修改且add到暂存区了,想要将文件重新放回工作区(撤销暂存)👇
-
-之后想要放弃修改,按照上面👆的步骤1操作即可
-
-```bash
-git restore --staged <file>
-#或者
-git reset HEAD <file>
-```
-
-###### **6.切换版本**
+#### **6.切换版本**
 
 *待更新
 
@@ -217,41 +235,33 @@ git reset HEAD <file>
   git reset --hard 1094adb #回到指定的版本 版本号不必写全
   ```
 
-###### **7.删除文件**
+#### **7.删除文件**
 
-在工作区的所有文件都已被git所追踪的条件下,当在工作区中删除文件后, 使用 `git status` 命令查看状态报告 , git会提示哪些文件被删除了
+如果不想要 `git` 继续跟踪管理某个文件，可以使用 `git rm` 命令 , 该命令同时也会删除工作目录下的对应文件。
 
-如:  ` deleted:    license.txt`
+```bash
+git rm test.txt
+rm 'test.txt'
+```
 
-下面分两种情况:
+如果没有使用 `git rm` 命令删除文件，而是手动到工作区删除了文件的话，使用 `git status` 命令查看状态报告时 , `git` 会提示哪些文件被删除了
 
-- 版本库中的文件也要删除
+```bash
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    test.txt
+```
 
-  ```powershell
-  git rm file #也从版本库中将该文件删除
-  ```
+并且 `git` 也给出了说明，如果想要记录此次删除操作，可以使用命令 `git add` 或 `git rm`
 
-- 误删了,恢复文件到工作区 （即撤销修改）
+如果想要撤销此次删除操作的话，可以使用命令`git restore`
 
-  ```powershell
-  git restore file
-  #或
-  git checkout -- file 
-  ```
+#### 8.打标签
 
-  注意如果commit文件到版本库后,又对文件进行了修改但未暂存,此时在资源管理器删除了该文件,再次恢复时,此次修改将会丢失,文件会恢复到commit后还未修改的版本👇 
+#### 9.别名
 
-  > 📍 git commit  file(提交到版本库) -> 
-  >
-  > modified(修改文件)-> 
-  >
-  > deleted(删除文件) ->
-  >
-  > git restore file (恢复版本库文件到本地)->
-  >
-  > local modifications lost(本地的修改丢失,文件为提交到版本库时的版本)
-
-#### 远程仓库
+### 远程仓库
 
 远程仓库是指保存在服务器上的代码库, 通常个人(或公司)的开源项目可以选择将代码托管到 **[github](https://github.com/)**,就无需自己搭建Git服务器啦。
 
@@ -261,7 +271,7 @@ git reset HEAD <file>
 
 > 📌GitHub允许你添加多个Key。假定你有若干电脑，你一会儿在公司提交，一会儿在家里提交，只要把每台电脑的Key都添加到GitHub，就可以在每台电脑上往GitHub推送了。 [🔗来源](https://www.liaoxuefeng.com/wiki/896043488029600/896954117292416)
 
-###### 1.添加远程仓库
+#### 1.添加远程仓库
 
 在github上新建远程仓库后可以选择
 
@@ -280,7 +290,7 @@ git clone <远程仓库地址>
 #如 git clone git@github.com:github/gitlib.git
 ```
 
-###### 2.常用操作
+#### 2.常用操作
 
 📍 先确保已经添加SSH密钥到Git账户哦（ 如 [github](https://docs.github.com/cn/github/authenticating-to-github/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) , gitlab )
 
@@ -313,9 +323,13 @@ git push -u origin master #-u参数会指定origin为默认远程仓库，之后
 git push # 📍 推送当前分支到默认仓库的对应分支
 ```
 
+### 分支管理
 
+#### 1.新建分支
 
-### 保存原理
+#### 2.
+
+## 保存原理
 
 `git add` 和 `git commit`这两条简短的命令具体做了哪些事？🤷‍♂️
 
@@ -618,13 +632,11 @@ find .git/objects -type f
 - 上传数据
 - 下载数据
 
-### 分支管理 
+## 分支原理
 
 这里写分支的优点
 
 📌使用分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作
-
-##### 分支原理
 
 📌Git 的分支，其实本质上仅仅是指向提交对象的**可变指针**。[链接🔗](https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%AE%80%E4%BB%8B)
 
@@ -804,7 +816,7 @@ e3f57a794cc17917b95373a53d42ce1f25e9b0ad
 
 
 
-### 名词解释：
+## 名词解释：
 
 ###### 快进
 

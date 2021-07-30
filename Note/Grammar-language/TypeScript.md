@@ -18,14 +18,16 @@
 
 Day 01  2020.10.15 15：00开始
 
-> 📌先看官方文档的介绍
->
+📌先看官方文档的介绍
+
 > - TypeScript offers **all** of JavaScript’s features, and an **additional layer** on top of these: TypeScript’s **type system.**
 >
 > - The main benefit of TypeScript is that it can highlight unexpected behavior in your code, **lowering the chance of bugs.**
 >
-> - Typescript支持Javascript的所有特性, 并进行了一层扩展: Typescript的类型系统.
-> - 使用Typescript的主要好处是它能突出代码中的意外表现 , 降低代码出现的几率.
+>   译：Typescript支持Javascript的所有特性, 并进行了一层扩展: Typescript的类型系统.
+>
+>    		使用Typescript的主要好处是它能突出代码中的意外表现 , 降低代码出现的几率.
+> 
 
 因为JS是一门弱类型的编程语言,各种数据类型之间往往会进行类型转换,这会带来一些问题,比如现在写了一个方法,期望参数是数字类型,但是调用该方法的人并不知情,于是传入了一个数组,虽然参数类型出错,但是JS在编译时并不会报错, 当程序运行时发现结果出错, 再次检查时才发现是类型错误
 
@@ -562,9 +564,13 @@ TS中`null`  和 `undefined` 的表现取决于配置 项`strictNullChecks`
 
 ## 3.泛型
 
+Generic
+
 
 
 ## 4.类
+
+
 
 ## 5.装饰器
 
