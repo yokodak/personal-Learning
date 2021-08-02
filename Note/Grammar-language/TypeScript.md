@@ -42,7 +42,7 @@ sum(1,'hello')
 
 此时TS会报错
 
-![image-20210722101638384](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210722101638384.png)
+<img src = "https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210722101638384.png">
 
 这样就能将运行时才发现的错误,提前到编译前就暴露,提高了代码的健壮性,减少了bug🐛出现的概率
 
@@ -453,6 +453,8 @@ x = "howdy"; //报错
 ```
 
 这样似乎没什么价值，因为很少有变量只能有一个取值，不过，将字面量和联合类型结合起来，能起到限制方法参数的效果，如下的方法`printText`的参数注解表示：两个参数，第一个参数要求是`string` 类型，第二个参数只能是字符串`left`, `right`,`center`中的一个
+
+<img src = "https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210802191619525.png " style = "width:100%">
 
 ```typescript
 function printText(s: string, alignment: "left" | "right" | "center") {
