@@ -1,126 +1,446 @@
-
-
 # HTML，CSS学习笔记：
 
-视频笔记：创建日期：2020.09.17
+> 📅：2020.09.17
+>
+> 📍: 学校
+>
+> 🔗:[尚硅谷新版Web前端HTML5+CSS3全套基础教程完整版(初学者零基础入门)]( https://www.bilibili.com/video/BV1XJ411X7Ud )
+>
+> 2020.09.17 **13:00**
+>
+> 2021 8.23 12:12 修改 重构 基于 [HTML教程 - MDN](https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Introduction_to_HTML)
 
-视频资源：尚硅谷新版Web前端HTML5+CSS3全套基础教程完整版(初学者零基础入门)
-
-视频链接： https://www.bilibili.com/video/BV1XJ411X7Ud 
-
-2020.09.17 **13:00**
-
-# ==Day 01== 2020.09.18
+Day 01  : 2020.09.18
 
  12:30 开始
 
-### 1.HTML（Hypertext Markup Language)   
+## 1.HTML 基础
 
-文档声明：写在文件的最开头
+超文本标记语言（Hypertext Markup Language) 
 
-![image-20200918133218577](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918133218577.png)
+### 1.概念引入
 
-![image-20200918133254387](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918133254387.png)
+- [**HTML**](https://developer.mozilla.org/zh-CN/docs/Glossary/HTML)
 
-![image-20200918133554904](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918133554904.png)
+  [HTML](https://developer.mozilla.org/zh-CN/docs/Glossary/HTML) (HyperText Markup Language) 不是一门编程语言，而是一种用来告知浏览器如何组织页面的**标记语言**
 
-### 2.meta标签：
+  HTML（超文本标记语言） 是一种描述语言，用来**定义网页结构**
 
-![image-20200918134213458](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918134213458.png)
+- **HTML文档**
 
-### 3.网页基本结构：
+  HTML 文档是包含多个 [HTML 元素](https://developer.mozilla.org/zh-CN/docs/Glossary/Element) 的**文本文档**。每个元素都用一对开始和结束 [标签](https://developer.mozilla.org/zh-CN/docs/Glossary/Tag) 包裹。每个标签以尖括号（`< >`）开始和结束。也有一部分标签中不需要包含文本，这些标签称为空标签(自结束标签)，如 `<img>`
 
-![image-20200918134731562](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918134731562.png)
+-  [HTML 元素](https://developer.mozilla.org/zh-CN/docs/Glossary/Element) 
 
-### 4.文档的使用：
+  HTML元素一般构造如下👇
 
-zeal：英文，权威，比较新 
+  
 
-W3Cschool
+  ![](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/anatomy-of-an-html-element.png)
 
-lang 表示language
+  
 
-### 5.liveserver
+  在 HTML 中, 标签用来创建元素
 
-==Question：怎么在idea中实现前端网页实时刷新？==
+  标签举例: 
 
-1. 在idea 插件商店安装LiveEdit插件
+  ```html
+  - <em>  斜体强调标签 
+  - <strong> 加粗强调标签
+  - <p> 段落标签
+  ```
 
-2. 谷歌浏览器中添加扩展程序：JetBrainsIDE Support
+### 2.块级元素和内联元素,空元素
 
-3. 选中需要实时刷新的文件右键 Debug
+- 块级元素(块元素)
 
-![image-20200918200549011](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918200549011.png)
+  在页面中 **独占一行** 的元素称为块元素,在网页中一般使用块元素来对网页进行**布局**
 
-4. 此时在chrome浏览器中就会以我们在LiveEdit中设置的速度刷新以实现“实时更新”
+  如
 
-设定如下：
+  ```html
+  <div>我是块元素的内容</div><h1>我独占页面一行</h1><p>我会换行显示</p>
+  ```
 
-![image-20200918200731219](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918200731219.png)
+  效果如下:
+
+  ![image-20210823144459576](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210823144459576.png)
+
+  
+
+- 内联元素(行内元素)
+
+  不会独占一行,通常用于包裹文字
+
+  如:
+
+  ```html
+  <em>第一</em><span>我还是在这行</span><strong>我不会独占一行!</strong><q>我不会换行显示</q>
+  ```
+
+  效果如下:
+
+  ![image-20210823144838012](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210823144838012.png)
 
 
+
+- 空元素(替换元素)
+
+  不是所有元素都拥有开始标签，内容，结束标签。一些元素只有一个标签，通常用来在此元素所在位置插入/嵌入一些东西
+
+  如  <img> 元素
+
+  ```html
+  <p>
+      我是块级元素
+  </p><img src="https://roy-tian.github.io/learning-area/extras/getting-started-web/beginner-html-site/images/firefox-icon.png"><span>我是行内元素</span>
+  ```
+
+  效果如下👇
+
+  
+
+  ![image-20210823145956464](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210823145956464.png)
+
+
+
+### 3.元素的属性
+
+属性包含元素的额外信息，这些信息不会出现在实际的内容中。元素的属性有其特定的作用,如标记元素( `id` 属性),指定超链接( `href` 属性 ) 等, 不同的元素之间,属性有所差异,一些属性是所有元素共有的,如 `class` 属性 `id` 属性等
+
+一个属性包含如下内容：
+
+1. 一个空格，在属性和元素名称之间。(如果已经有一个或多个属性，就与前一个属性之间有一个空格。)
+2. 属性名称，后面跟着一个等于号。
+3. 一个属性值，由一对引号“ ”引起来
+
+如:
+
+```html
+<a href = "https://developer.mozilla.org/zhCN/docs/learn/HTML/Introduction_to_HTML/Getting_started"
+   title = "MDN" > 开始学习HTML</a>
+```
+
+对于没有属性值,只有属性名的属性,我们称之为 **布尔属性** , 如 `disabled ` 属性 
+
+```html
+<!-- 使用disabled属性来防止终端用户输入文本到输入框中 -->
+<input type="text" disabled>
+```
+
+### 4.HTML文档结构
+
+如下的 HTML 文档 (来自 [MDN](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Getting_started#%E5%89%96%E6%9E%90html%E6%96%87%E6%A1%A3))
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>我的测试站点</title>
+  </head>
+  <body>
+    <p>这是我的页面</p>
+  </body>
+</html>
+```
+
+1. `<!DOCTYPE html>`: 声明文档类型(以前的声明类似链接,用于规定HTML 遵守的规则,检测错误等,现在简化了)
+2. `<html></html>`: `<html>`元素。这个元素包裹了整个完整的页面，是一个根元素。
+3.  `<head>元素`. 这个元素是一个容器，它包含了所有你想包含在HTML页面中但不想在HTML页面中显示的内容。这些内容包括你想在搜索结果中出现的**关键字**和**页面描述**，**CSS样式**，**字符集声明**等等。
+4. `<meta charset="utf-8">`: 这个元素设置文档使用utf-8字符集编码
+5. `<title></title>`: 设置页面标题，出现在浏览器标签上
+6. `<body></body>`: `<body>`元素。 包含了你访问页面时所有显示在页面上的内容，文本，图片，音频，游戏等等。
+
+> 可以通过以下方式查询元素语义，作用
+>
+> zeal：英文，权威，比较新 
+>
+> W3Cschool
 
 **14：10** pause
 
 **20：10** start
 
-6.实体：（转义字符）
+### 5.实体引用：（转义字符）
 
-更多其它的实体可以在W3Cschool 查询手册
+在 `HTML` 元素的内容中不管使用多少空格，最后渲染出来还是只有一个空格，如果要显示多个空格，可以使用转义字符 `&nbsp;`*（在vue项目中无效是怎么回事？）*
 
-![image-20200918201546362](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918201546362.png)
+一些特殊字符如 `<` `>` `'` 是 HTML 语法自身的一部分, 想要在页面上正确地显示它们，也需要使用转义字符
 
-7.meta标签：
+如下：
 
-用于设置网页的一些元数据：
+```html
+<p>HTML 中用 <p> 来定义段落元素。</p>
 
-以下三行代码分别实现了：
+<p>HTML 中用 &lt;p&gt; 来定义段落元素</p>
+```
 
-1. 指定该网页的字符集为UTF-8
-2. 将HTML5,前端，CSS3作为搜索引擎的查询关键字
-3. 用于对网站进行描述，会出现在标题下方
+效果如图：
 
-meta标签内的 http-equiv  = "refresh" content  = "重定向的时间;url=重定向的网址"可以用来重定向。
-
-![image-20200918202733927](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918202733927.png)
-
-8.块元素（block element)
-
-在html中独占一行的元素称为块元素；**在网页中一般使用块元素来对网页进行布局**
-
-比如 标题标签<h1> <h2> 段落标签<p> ,<div>标签等
-
-![image-20200918203853005](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918203853005.png)
-
-==标签随记：==
-
-1. <hgroup>可以用来为标题分组；
-2. 自结束标签<em> 用于表示语音语调的一个加重；（页面上的样式表现为斜体）
-
-![image-20200918204108913](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918204108913.png)
-
-3. <strong>标签表示强调重要内容；
-4. “<blockquote>” 标签，表示长引用，块元素：
-
-![image-20200918204730886](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918204730886.png)
-
-5. <q>表示短引用，有引号：
-
-![image-20200918204851210](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918204851210.png)
+![image-20210823155815158](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210823155815158.png)
 
 
 
+下表（[MDN](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Getting_started#%E5%AE%9E%E4%BD%93%E5%BC%95%E7%94%A8%EF%BC%9A_%E5%9C%A8html%E4%B8%AD%E5%8C%85%E5%90%AB%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6))显示了部分常用的转义字符
+
+| 字符 | 等价字符引用 |
+| :--: | :----------: |
+| `<`  |    `&lt;`    |
+| `>`  |    `&gt`;    |
+| `"`  |   `&quot;`   |
+| `'`  |   `&apos;`   |
+| `&`  |   `&amp;`    |
+
+### 6.HTML注释
+
+<!-- 我是注释 -->
+
+### 7.`<head>`标签里有什么
+
+`<head> ` 元素得内容不会在浏览器中显示，它的作用是保存页面的一些 [元数据](https://developer.mozilla.org/zh-CN/docs/Glossary/Metadata)
+
+- `<title> ` 元素是一项元数据，用于表示整个 HTML 文档的标题（即标签栏看到的标题）
+
+  它的内容也被用在搜索的结果中
+
+- `<meta>` 元素 - 元数据
+
+  元数据就是描述数据的数据，用来构建HTML文档的基本结构，以及就如何处理文档**向浏览器提供信息和指示**，它们本身不是文档内容，但提供了关于后面文档内容的信息 [🔗](https://segmentfault.com/a/1190000010342600)
+
+  如下的`<meta>`元素指定了网页采用的字符集
+
+  ```html
+  <meta charset="utf-8"> <!--指定网页字符集为 utf- 8 -->
+  ```
+
+  一些常用的 `<meta>` 元素
+
+  - `name` 指定了meta 元素的类型； 说明该元素包含了什么类型的信息。
+
+    ```html
+    <meta name="参数" content="具体描述信息">
+    ```
+
+  - `content` 指定了实际的元数据内容。s
+
+    如下的两条元数据分别说明了 `网页作者` 和  `页面描述`
+
+    ```html
+    <meta name="author" content="Chris Mills">
+    <meta name="description" content="The MDN Learning Area aims to provide
+    complete beginners to the Web with all they need to know to get
+    started with developing web sites and applications.">
+    ```
+
+    更多的 `name` 值及其释义见[下表](https://segmentfault.com/a/1190000010342600)
+
+    | 元数据名称       | 说明                                                         |
+    | ---------------- | ------------------------------------------------------------ |
+    | application name | 当前页所属Web应用系统的名称                                  |
+    | ~~keywords~~     | 描述网站内容的关键词,以逗号隔开，用于SEO搜索（已废弃）       |
+    | description      | 当前页的说明                                                 |
+    | author           | 当前页的作者名                                               |
+    | copyright        | 版权信息                                                     |
+    | renderer         | renderer是为双核浏览器准备的，用于指定双核浏览器默认以何种方式渲染页面 |
+    | viewreport       | 它提供有关视口初始大小的提示，仅供移动设备使用               |
+
+  - `http-equiv` 
+
+    http-equiv属性在HTML4中有很多值，在HTML5中只有`refresh`、`default-style`、`content-type`可用
+
+  - `charset` 
+
+    charset为HTML5中新增的，用来声明字符编码;
+
+- [ ] 关于 `meta` 元素的各种标准元数据，参见 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/meta/name)，这里先占个位，以后再补充
+
+### 8.网页图标
+
+可以通过下面的方式为网页添加图标
+
+```html
+<link rel="shortcut icon" href="图标地址，如favicon.ico" type="image/x-icon">
+```
+
+> **注**：如果你的网站使用了内容安全策略（Content Security Policy, CSP）来增加安全性，这个策略会应用在图标上。如果你遇到了图标没有被加载的问题，你需要确认认 [Content-Security-Policy](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Security-Policy) header 的 [img-src directive](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src) 没有禁止访问图标。([MDN](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML#%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%AB%99%E7%82%B9%E5%A2%9E%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%BE%E6%A0%87))
+
+- [ ] `<link>` 元素的其他作用 [🔗](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/link) 占位 以后补充
+
+### 9.HTML文档书写规范
+
+- [结构化](https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure)
+
+  使用语义化的元素如 `<header>`、`<nav>`、`<aside>` 等
+
+- 语义化
+
+- 尽量不使用表象元素（ 如 `<b>`  `<i>`和`<u>`)
+
+### 10.链接元素 `<a>`
+
+- `<a>` 的属性
+
+  - `href` =  '地址'  ，用于设置链接指向的网址
+
+    - 链接到文档片段 ：使用 `#` 符号
+
+      将 `href` 属性的值设置为 `#` 则链接到页面顶部 ，设置为元素 `id` 则跳转到对应位置 (如`#bottom`)  当 `href` 的值为`"javascript:;"`时，则点击后不会跳转，可以作为超链接的占位符使用。
+
+      ```html
+      <p>请将信件邮寄至 <a href="contacts.html#Mailing_address">我们的地址</a>。</p>
+      <!-- 同文档内片段-->
+      <p>本页面底部可以找到 <a href="#Mailing_address">公司邮寄地址</a>。</p>
+      ```
+
+    - 电子邮件链接
+
+      当 `mailto` 为空时，一个新的发送电子邮件的窗口也会被用户的邮件客户端打开，只是没有收件人的地址信息。
+
+      ```html
+      <a href="mailto:nowhere@mozilla.org">向 nowhere 发邮件</a>
+      ```
+
+  - `title` =  ' 标题' 设置链接标题，鼠标悬停在元素上会显示标题内容
+
+  - `target` = '值' 设置链接打开的位置，默认为 `_self` 即当前窗口打开，设置为 `_blank`则在新窗口打开
+
+  - `download` = '资源名称'  ，仅适用于同源 URL，下面是一个下载链接到Firefox 的 Windows最新版本的[示例](https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Introduction_to_HTML/Creating_hyperlinks#%E5%9C%A8%E4%B8%8B%E8%BD%BD%E9%93%BE%E6%8E%A5%E6%97%B6%E4%BD%BF%E7%94%A8_download_%E5%B1%9E%E6%80%A7)
+
+    ```html
+    <a href="https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=zh-CN"
+       download="firefox-latest-64bit-installer.exe">
+      下载最新的 Firefox 中文版 - Windows（64位）
+    </a>
+    ```
+
+- 链接书写规范
+
+  - 说明链接的内容，避免使用 `链接` `点这里` 之类的词作为链接内容
+  - 链接到非 `HTML` 资源时，注明资源信息及要求 如 `下载报告 (PDF,10MB)` `进入游戏（需要flash插件）`
+  - 保证链接内容尽可能短，不要使用 URL 作为链接内容
+  - 链接到同一网站的其他位置，尽量使用相对链接
+
+### 11.HTML高阶文字排版
+
+包括 标记引文、描述列表、计算机代码和其他相关文本、下标和上标、联系信息 等
+
+- [描述列表](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Advanced_text_formatting#%E6%8F%8F%E8%BF%B0%E5%88%97%E8%A1%A8)
+- [标记引文](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Advanced_text_formatting#%E5%BC%95%E7%94%A8)
+- [计算机代码](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Advanced_text_formatting#%E5%B1%95%E7%A4%BA%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BB%A3%E7%A0%81)
+- [下标和上标](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Advanced_text_formatting#%E4%B8%8A%E6%A0%87%E5%92%8C%E4%B8%8B%E6%A0%87)
+- [联系信息，缩略语](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Advanced_text_formatting#%E7%BC%A9%E7%95%A5%E8%AF%AD)
+- [时间和日期](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Advanced_text_formatting#%E6%A0%87%E8%AE%B0%E6%97%B6%E9%97%B4%E5%92%8C%E6%97%A5%E6%9C%9F)
+
+### 12.阶段练习
+
+- [信件排版](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Marking_up_a_letter)
+
+  [练习材料](https://github.com/roy-tian/learning-area/tree/master/html/introduction-to-html/marking-up-a-letter-start)
+
+- [构建网页](https://developer.mozilla.org/zh-CN/docs/learn/HTML/Introduction_to_HTML/Structuring_a_page_of_content)
 
 
-9.行内元素：（内联元素）：inline element
 
-在页面中不会独占一行的元素称为行内元素（inline element），一般会用来包裹文字，一般情况下我们会在块元素中放置行内元素，但是不会在行内 元素中放置块元素。
+## 2.HTML 多媒体
 
-*tips*:<p> 标签中不能放置任何==块元素==
+### 1.图片
 
-比如<em>，<strong> <span>标签
+- 普通图像
 
-![image-20200918204253511](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918204253511.png)
+  使用 `<img> ` 元素引入
+
+  > - SEO 
+  >
+  >   将图片放置于 `images`文件夹下有利于  [SEO](https://developer.mozilla.org/zh-CN/docs/Glossary/SEO) ，图像的文件名也会被搜索引擎读取，所以最好是根据图片内容命名，而不是使用随便的字母数字
+  >
+  > - 路径
+  >
+  >   同一项目的图片使用相对路径，将图片和 HTML 放在同一服务器上
+  >
+  > - 注意图片的版权问题，不要随便使用图片，`src` 属性不要指向其他人网站上的图片，可以到一些可商用图片库、无版权图片库搜索图片。如果经过允许可以使用他人图片，要附上说明
+
+  `<img> 、<video>`这样的元素有时被称之为**替换元素**，因为这样的元素的内容和尺寸由外部资源（像是一个图片或视频文件）所定义，而不是元素自身 ( [MDN](https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Multimedia_and_embedding/Images_in_HTML) )。
+
+  - 备选文本属性 `alt` 
+
+    属性值是对图片的文字描述，用于在图片无法显示或不能被看到的情况，也有利于 SEO , 并在多种情况下发挥作用如 用户有视力障碍，用户关闭图片显示，浏览器不支持图片类型，你把文件名拼错等。
+    
+    关于 可访问性 的内容 可以参见 [可访问性-MDN](https://developer.mozilla.org/zh-CN/docs/learn/Accessibility)
+    
+    备选文本的内容在不同情况有不同要求，尽量不要将内容写得冗余繁杂。
+
+    ```html
+    <img src="images/dinosaur.jpg"
+         alt="一只恐龙头部和躯干的骨架，它有一个巨大的头，长着锋利的牙齿。">
+    ```
+    
+  - 图片宽高属性
+
+    ```html
+    <img src="images/dinosaur.jpg"
+         alt="一只恐龙头部和躯干的骨架，它有一个巨大的头，长着锋利的牙齿。"
+         width="400"
+         height="341">
+    ```
+
+    > 如果你需要改变图片的尺寸，你应该使用 CSS 而不是 HTML。
+
+  - 图片标题属性
+
+    鼠标悬浮会显现提示信息
+
+    ```html
+    <img src="images/dinosaur.jpg"
+         alt="一只恐龙头部和躯干的骨架，它有一个巨大的头，长着锋利的牙齿。"
+         title="A T-Rex on display in the Manchester University Museum">
+    ```
+
+  - 内容说明元素 `<figure>` ， `<figcaption>`
+
+    `HTML5` 的元素 用于对页面的元素进行说明，描述（如图片描述，代码说明，方程描述等），通常用于将标题和内容联系起来
+
+    ```html
+    <figure>
+      <img src="https://raw.githubusercontent.com/mdn/learning-area/master/html/multimedia-and-embedding/images-in-html/dinosaur_small.jpg"
+         alt="一只恐龙头部和躯干的骨架，它有一个巨大的头，长着锋利的牙齿。"
+         width="400"
+         height="341">
+      <figcaption>曼彻斯特大学博物馆展出的一只霸王龙的化石</figcaption>
+    </figure>
+    ```
+
+    `<figcaption>` 元素的文字内容描述了 `<figure>`元素
+
+    更多关于  `figure` 和 ` <figcaption>` 见 [figure](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/figure) ，[figcaption](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/figcaption)
+
+  - CSS 背景图
+
+    ```css
+    p {
+      background-image: url("images/dinosaur.jpg");
+    }
+    ```
+
+    CSS 背景图片只是为了装饰 , 没有语义上的意义，它们没有任何备选文本，也不能被屏幕阅读器识别。
+
+    如果图像对您的内容里有意义，则应使用 HTML 图像。 如果图像纯粹是装饰，则应使用 [CSS 背景图片](https://developer.mozilla.org/zh-CN/docs/Learn/HTML/Multimedia_and_embedding/Images_in_HTML#css_%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87)。
+
+- 矢量图
+
+  
+
+- 响应式图片
+
+### 2.视频和音频
+
+### 3.嵌入技术
+
+
+
+## 3.HTML 表格
+
+## 4.CSS 基础
 
 10.浏览器使用f12检查中的elements窗口内的代码是浏览器内部储存的代码，如果我们写的代码不符合规范，浏览器会自动帮我们修正，但是尽量不要让浏览器帮我们修正代码，这样不仅会影响性能，还有可能得到我们不想要的效果。
 
@@ -147,29 +467,7 @@ dl 定义列表：一般会用于二级菜单等。
 
 ![image-20200918211402828](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918211402828.png)
 
-13.超链接 a标签：行内元素
 
-a标签中可以嵌套除它本身以外的任何元素
-
-a标签的target属性：
-
-_self:在当前页面中打开超链接
-
-_blank：在在一个新的页面中打开超链接
-
-a标签的href属性：
-
-设置为"#"点击则到达顶部
-
-如果在#后面添加元素的id，则跳转到指定元素的位置；
-
-当href的值为"javascript:;"时，则点击后不会跳转，可以作为超链接的占位符使用；
-
-![image-20200918213203014](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918213203014.png)
-
-![image-20200918212522437](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918212522437.png)
-
-![image-20200918212921068](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200918212921068.png)
 
 14.相对路径：
 

@@ -2,7 +2,290 @@
 
 2020.11.26 22：25
 
-### 1.Iterator（遍历器）的概念 [§](https://es6.ruanyifeng.com/#docs/iterator#Iterator（遍历器）的概念) [⇧](https://es6.ruanyifeng.com/#docs/iterator)
+### 1.异步编程：
+
+摘自 [阮一峰 es6 入门教程](https://es6.ruanyifeng.com/#docs/promise)
+
+#### 1.传统方法 [🔗](https://es6.ruanyifeng.com/#docs/generator-async#%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%B3%95)
+
+ES6 诞生以前，异步编程的方法，大概有下面四种。
+
+- 回调函数
+- 事件监听
+- 发布/订阅
+- Promise 对象
+
+Generator 函数将 JavaScript 异步编程带入了一个全新的阶段。
+
+#### 2.异步概念：
+
+所谓"异步"，简单说就是一个任务不是连续完成的，可以理解成该任务被人为分成两段，先执行第一段，然后转而执行其他任务，等做好了准备，再回过头执行第二段。
+
+非连续的执行，需要等待的任务
+
+比如，有一个任务是读取文件进行处理，任务的第一段是向操作系统发出请求，要求读取文件。然后，程序执行其他任务，等到操作系统返回文件，再接着执行任务的第二段（处理文件）。**这种不连续的执行，就叫做异步**。
+
+相应地，连续的执行就叫做同步。由于是连续执行，不能插入其他任务，所以操作系统从硬盘读取文件的这段时间，程序只能干等着。
+
+#### 3.浏览器多线程与js单线程
+
+[浏览器多线程与js单线程](https://juejin.cn/post/6844903812642111501)
+
+[事件循环（ event loop ） 宏任务与微任务]( https://zhuanlan.zhihu.com/p/78113300)
+
+#### 3.回调函数
+
+JavaScript 语言对异步编程的实现，就是回调函数。
+
+所谓回调函数，就是把任务的第二段单独写在一个函数里面，等到重新执行这个任务的时候，就直接调用这个函数。回调函数的英语名字`callback`，直译过来就是"重新调用"。
+
+
+
+#### 4.回调地狱：
+
+ 回调函数本身并没有问题，它的问题出现在多个回调函数嵌套。假定读取`A`文件之后，再读取`B`文件，代码如下。 
+
+```javascript
+fs.readFile(fileA, 'utf-8', function (err, data) {
+  fs.readFile(fileB, 'utf-8', function (err, data) {
+    // ...
+  });
+});
+```
+
+ 不难想象，如果依次读取两个以上的文件，就会出现多重嵌套。代码不是纵向发展，而是横向发展，很快就会乱成一团，无法管理。
+
+因为多个异步操作形成了强耦合，只要有一个操作需要修改，它的上层回调函数和下层回调函数，可能都要跟着修改。这种情况就称为"回调函数地狱"（callback hell）。 
+
+ Promise 对象就是为了解决这个问题而提出的。它不是新的语法功能，而是一种**新的写法**，允许将回调函数的嵌套，改成**链式调用**。采用 Promise，连续读取多个文件，写法如下：
+
+```javascript
+var readFile = require('fs-readfile-promise');
+
+readFile(fileA)
+.then(function (data) {
+  console.log(data.toString());
+})
+.then(function () {
+  return readFile(fileB);
+})
+.then(function (data) {
+  console.log(data.toString());
+})
+.catch(function (err) {
+  console.log(err);
+});
+```
+
+#### 5.promise使用
+
+> 下面的` resolve` 都指 promise 的状态从 `pending` 变为 `fulfilled `
+
+- **基本使用**
+
+  创建一个 promise 对象
+
+  下面使用 `setTimeout ` 方法模拟了异步操作，表示200ms 后结果才返回 
+
+  ```js
+  let myPromise = new Promise ((resolve,reject) => {
+    setTimeout(() => {
+      resolve('success!') //  resolve 的作用是将 promise 对象的状态从 未完成 变成 成功
+    }, 200);              //  resolve 的参数作为异步操作的结果传递给 resolve 状态的回调函数
+  });                     
+  ```
+
+  `resolve`状态的回调函数是 `then` 方法的第一个匿名函数,  `reject` 状态的回调函数是 `then` 方法的第二个参数， `then ` 方法的两个参数都是可选的，都接受 `promise `对象传出的值作为参数
+
+  ```js
+  // 调用 promise 的 then 方法，此时，resolve 的实参会作为参数传递进 message 
+  myPromise.then((message) => {
+    console.log(message);    // 输出 success！
+  },(error) => {
+    console.log(error);	   // 因为没有调用 reject 方法 ，所以这部分代码不会执行
+  })
+  ```
+
+  **例1：** `promise ` 实现 `ajax ` 操作的例子，对 `XMLHttpRequest` 的封装
+
+  ```js
+  const getJSON = function(url) {   // 返回一个 Promise 对象👇
+    const promise = new Promise(function(resolve, reject){
+      // 定义请求的响应状态改变后的回调函数
+      const handler = function() {
+        if (this.readyState !== 4) {
+          return;
+        }
+        if (this.status === 200) {
+          resolve(this.response); // 请求成功，将结果传递给 resolve 的回调函数 --> 输出请求结果
+        } else {
+          reject(new Error(this.statusText)); // 请求失败，将失败信息传递给 reject 的回调函数 --> 输出错误信息
+        }
+      };
+      const client = new XMLHttpRequest(); // 创建 XMLHttpRequest 对象发送 ajax 请求
+      client.open("GET", url);
+      client.onreadystatechange = handler; // 请求的响应状态改变后，调用回调函数 handler
+      client.responseType = "json";
+      client.setRequestHeader("Accept", "application/json");
+      client.send();
+  
+    });
+    return promise;
+  };
+  
+  // 使用封装后的 ajax 操作
+  getJSON("/posts.json").then(function(json) {
+    console.log('Contents: ' + json);
+  }, function(error) {
+    console.error('出错了', error);
+  });
+  ```
+
+  `resolve` 方法的参数是  `promise ` 实例的情况 
+
+  下面代码中，`p2` 的  `resolve` 方法的参数，是 另一个`promise` 实例 `p1` ， 1s 后 `p2 `的状态已经变为 `resolve ` ，但此时 `p1` 还在 `pending` 所以 ` p2 `的回调函数会等待 `p1` 的状态改变，即此时的 `p2` 自己的状态无效了。
+
+  3s 后 `p1`  的状态变为 `rejected`  ，则 `p2 ` 的 `catch`  方法指定的回调函数立刻执行，打印 `error: fail`
+
+  ```js
+   // p1是一个 promise ，3s 后状态变为 rejected 
+   const p1 = new Promise(function (resolve, reject) {
+    setTimeout(() => reject(new Error('fail')), 3000)
+  })
+   // p2的状态 1s 后变为 fulfilled
+   const p2 = new Promise(function (resolve, reject) {
+    setTimeout(() => resolve(p1), 1000) // p1 的状态决定了 p2 的状态
+  })
+   
+   p2
+    .then(result => console.log(result)) // 不会执行，因为要等待 p1 的状态改变
+    .catch(error => console.log(error))  // 如果 p1 的状态已经是 rejected p2 的回调函数会立刻执行
+  // Error: fail
+  ```
+
+  一般来说，调用 resolve 或 reject 以后，Promise 的使命就完成了，**后继操作应该放到then方法里面**，而不应该直接写在resolve或reject的后面。
+
+  所以，最好在它们前面加上return语句，这样就不会有意外。
+
+  ```js
+  new Promise((resolve, reject) => {
+    return resolve(1);
+    // 后面的语句不会执行
+    console.log(2);
+  })
+  ```
+
+   promise 的状态一旦改变，就不会再变
+
+  ```js
+  const promise3 = new Promise(function(resolve, reject) {
+    resolve('ok'); //这里只会调用 then 里的回调函数，错误将不会被捕获
+    throw new Error('test');
+  });
+  promise3
+    .then(function(value) { console.log(value) }) 
+    .catch(function(error) { console.log(error) }); // 错误不会被捕获，catch 方法不会执行
+  // 输出: ok
+  ```
+
+  一般来说，不要在 then 方法里定义 `reject` 状态的回调，总是使用 `catch` 方法，这样结构更清晰，且还能捕获 then 方法的错误。
+
+- **链式调用**
+
+  因为 `then `方法返回的是一个新的 `Promise` 实例 , 因此 `then ` 方法可以链式调用，这样使异步操作能像同步一样书写，从而解决多个回调函数嵌套（回调地狱）的问题。
+
+  前一个回调函数的返回值会作为下一个 `then` 方法中的回调函数的参数
+
+  ```typescript
+  getJSON("/posts.json").then(function(json:any) {
+    return json.post;           // json.post 作为第二个promise resolved状态的回调函数的参数
+  }).then(function(post) {
+    // ...                 
+  });
+  ```
+
+  如果前一个回调函数的返回值是一个 promise ，那么下一个回调函数会等待该 promise 的状态发生改变再调用
+
+  ```js
+  getJSON("/post/1.json").then(function(post:any) {
+    return getJSON(post.commentURL); // 返回一个 promise 
+  }).then(function (comments) {      // 等待 promise 的状态变化 ，resolved 则调用第一个回调函数，rejected 则调用第二个回调函数
+    console.log("resolved: ", comments);
+  }, function (err){
+    console.log("rejected: ", err);
+  });
+  ```
+
+- **错误处理**
+
+  **catch** 方法 
+
+  ` Promise.prototype.catch()` 方法是 `.then(null, rejection)` 或
+
+   `.then(undefined, rejection)` 的 别名，用于指定发生错误时的回调函数，  会捕获` promise `对象内产生的错误和 `then` 方法指定的**回调函数**的错误
+
+  ```js
+  getJSON('/posts.json').then(function(posts) {
+    // ...
+  }).catch(function(error) {
+    // 处理 getJSON 和 前一个回调函数运行时发生的错误
+    console.log('发生错误！', error);
+  });
+  ```
+
+  **例2：**
+
+  ```js
+  const promise = new Promise(function(resolve, reject) {
+    throw new Error('test');
+  });
+  promise.catch(function(error) {
+    console.log(error);           // 会捕获
+  });
+  // Error: test
+  
+  // 写法二
+  const promise2 = new Promise(function(resolve, reject) {
+    reject(new Error('test'));        // reject 方法的作用等同于抛出错误
+  });
+  promise2.catch(function(error) {
+    console.log(error);
+  });
+  ```
+
+  promise 内部的错误不会影响到 promise 外部的代码
+
+  ```js
+  const someAsyncThing = function() {
+    return new Promise(function(resolve, reject) {
+      // 下面一行会报错，因为x没有声明，但是并不会终止脚本执行
+      // resolve(x + 2);   
+    });
+  };
+  
+  someAsyncThing().then(function() {
+    console.log('everything is great'); // 因为出错，resolved 对应的回调函数不会被执行
+  });
+  setTimeout(() => { console.log(123) }, 2000); // 照常执行
+  // Uncaught (in promise) ReferenceError: x is not defined
+  // 123
+  ```
+
+- **finally，all 方法**
+
+#### 6.promise的问题：
+
+`Promise`也有一些缺点。
+
+首先，无法取消`Promise`，一旦新建它就会立即执行，无法中途取消。
+
+其次，如果不设置回调函数，`Promise`内部抛出的错误，不会反应到外部。
+
+第三，当处于`pending`状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。 
+
+ Promise 的最大问题是代码冗余，原来的任务被 Promise 包装了一下，不管什么操作，一眼看去都是一堆`then`，**原来的语义变得很不清楚**。 
+
+### 2.Iterator（遍历器）的概念 [§](https://es6.ruanyifeng.com/#docs/iterator#Iterator（遍历器）的概念) [⇧](https://es6.ruanyifeng.com/#docs/iterator)
 
 #### 1.简介：
 
@@ -16,7 +299,7 @@
 
 二是使得数据结构的成员能够按某种次序排列；
 
-三是 ES6 创造了一种新的遍历命令`for...of`循环，Iterator 接口主要供`for...of`消费。 
+三是 ES6 创造了一种新的遍历命令`for...of`循环，**Iterator 接口主要供`for...of`消费。** 
 
 #### 3.Iterator 的遍历过程
 
@@ -71,7 +354,7 @@ Iterator 接口的目的，就是为所有数据结构，提供了一种统一�
 
 ES6 规定，默认的 Iterator 接口部署在数据结构的`Symbol.iterator`属性，或者说，一个数据结构只要具有`Symbol.iterator`属性，就可以认为是“可遍历的”（iterable）。`Symbol.iterator`属性本身是一个函数，==就是当前数据结构默认的遍历器生成函数==。执行这个函数，就会返回一个遍历器。至于属性名`Symbol.iterator`，它是一个表达式，返回`Symbol`对象的`iterator`属性，这是一个预定义好的、类型为 Symbol 的特殊值，所以要放在方括号内
 
-### 2.Generator
+### 3.Generator
 
 #### 1.概念：
 
@@ -127,6 +410,12 @@ hw.next()
 
  由于 Generator 函数返回的遍历器对象，只有调用`next`方法才会遍历下一个内部状态，所以其实提供了一种可以暂停执行的函数。`yield`表达式就是暂停标志。 
 
+```js
+function* gen() {
+  yield  123 + 456; // 不会立即求值，只有当 next 方法将指针移到这一句代码时，才会求值
+}
+```
+
  `yield`表达式后面的表达式，只有当调用`next`方法、内部指针指向该语句时才会执行 。
 
  `yield`表达式只能用在 Generator 函数里面，用在其他地方都会报错。 
@@ -141,9 +430,7 @@ hw.next()
 
 而`return`语句不具备位置记忆的功能。
 
-**一个函数里面，只能执行一次（或者说一个）`return`语句，**
-
-**但是可以执行多次（或者说多个）`yield`表达式。**
+并且一个函数里面，只能执行一次（或者说一个）`return`语句，但是可以执行多次（或者说多个）`yield`表达式。
 
 正常函数只能返回一个值，因为只能执行一次`return`；
 
@@ -153,7 +440,23 @@ Generator 函数可以返回一系列的值，因为可以有任意多个`yield`
 
 #### 5.暂缓执行函数：
 
- Generator 函数可以不用`yield`表达式，这时就变成了一个单纯的暂缓执行函数。  只有调用`next`方法时，函数`f`才会执行 。
+ Generator 函数可以不用`yield`表达式，这时就变成了一个单纯的暂缓执行函数。  
+
+`f`如果是普通函数，在为变量`generator`赋值时就会执行,
+
+但是，函数`f`是一个 Generator 函数，只有调用`next`方法时，函数`f`才会执行 。
+
+```js
+function* f() {
+  console.log('执行了！')
+}
+
+var generator = f();
+
+setTimeout(function () {
+  generator.next()
+}, 2000);
+```
 
 #### 6.使对象具有 Iterator 接口 :
 
@@ -173,85 +476,6 @@ myIterable[Symbol.iterator] = function* () {
 ```
 
  **==除了`for...of`循环以外，扩展运算符（`...`）、解构赋值和`Array.from`方法内部调用的，都是遍历器接口==** 
-
-### 3.异步编程：
-
-#### 1.传统方法
-
-ES6 诞生以前，异步编程的方法，大概有下面四种。
-
-- 回调函数
-- 事件监听
-- 发布/订阅
-- Promise 对象
-
-Generator 函数将 JavaScript 异步编程带入了一个全新的阶段。
-
-#### 2.异步概念：
-
-所谓"异步"，简单说就是一个任务不是连续完成的，可以理解成该任务被人为分成两段，先执行第一段，然后转而执行其他任务，等做好了准备，再回过头执行第二段。
-
-比如，有一个任务是读取文件进行处理，任务的第一段是向操作系统发出请求，要求读取文件。然后，程序执行其他任务，等到操作系统返回文件，再接着执行任务的第二段（处理文件）。这种不连续的执行，就叫做异步。
-
-相应地，连续的执行就叫做同步。由于是连续执行，不能插入其他任务，所以操作系统从硬盘读取文件的这段时间，程序只能干等着。
-
-#### 浏览器多线程与js单线程
-
-https://juejin.cn/post/6844903812642111501
-
-#### 3.回调函数
-
-JavaScript 语言对异步编程的实现，就是回调函数。
-
-所谓回调函数，就是把任务的第二段单独写在一个函数里面，等到重新执行这个任务的时候，就直接调用这个函数。回调函数的英语名字`callback`，直译过来就是"重新调用"。
-
-#### 4.回调地狱：
-
- 回调函数本身并没有问题，它的问题出现在多个回调函数嵌套。假定读取`A`文件之后，再读取`B`文件，代码如下。 
-
-```javascript
-fs.readFile(fileA, 'utf-8', function (err, data) {
-  fs.readFile(fileB, 'utf-8', function (err, data) {
-    // ...
-  });
-});
-```
-
- 不难想象，如果依次读取两个以上的文件，就会出现多重嵌套。代码不是纵向发展，而是横向发展，很快就会乱成一团，无法管理。
-
-因为多个异步操作形成了强耦合，只要有一个操作需要修改，它的上层回调函数和下层回调函数，可能都要跟着修改。这种情况就称为"回调函数地狱"（callback hell）。 
-
- Promise 对象就是为了解决这个问题而提出的。它不是新的语法功能，而是一种新的写法，允许将回调函数的嵌套，改成==链式调用==。采用 Promise，连续读取多个文件，写法如下：
-
-```javascript
-var readFile = require('fs-readfile-promise');
-
-readFile(fileA)
-.then(function (data) {
-  console.log(data.toString());
-})
-.then(function () {
-  return readFile(fileB);
-})
-.then(function (data) {
-  console.log(data.toString());
-})
-.catch(function (err) {
-  console.log(err);
-});
-```
-
-#### 5.promise的问题：
-
- `Promise`也有一些缺点。
-
-首先，无法取消`Promise`，一旦新建它就会立即执行，无法中途取消。
-
-其次，如果不设置回调函数，`Promise`内部抛出的错误，不会反应到外部。
-
-第三，当处于`pending`状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。 
-
- Promise 的最大问题是代码冗余，原来的任务被 Promise 包装了一下，不管什么操作，一眼看去都是一堆`then`，==原来的语义变得很不清楚==。 
 
 ### 4.Generator 函数的异步应用：
 
@@ -358,7 +582,7 @@ g.throw('出错了');
 
 上面代码的最后一行，Generator 函数体外，使用指针对象的`throw`方法抛出的错误，可以被函数体内的`try...catch`代码块捕获。这意味着，出错的代码与处理错误的代码，实现了时间和空间上的分离，这对于异步编程无疑是很重要的
 
-### 5，async:
+### 5.async:
 
 #### 1.介绍：
 

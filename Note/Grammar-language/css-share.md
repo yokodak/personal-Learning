@@ -1,0 +1,185 @@
+# CSS 基础知识梳理
+
+🙎‍♂️：润华 
+
+🙎‍♂️:   一帆
+
+### 1.基础概念
+
+- 什么是 **CSS**
+
+  `CSS  ` 即 层叠样式表 ( **C**ascading **S**tyle **S**heets )
+
+  
+
+  ![CSS-shade](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/CSS-shade.svg)
+
+  ​															    
+
+  ​															 	（*维基百科 [层叠样式表](https://zh.wikipedia.org/wiki/%E5%B1%82%E5%8F%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8)，图片作者：[Fenring](https://en.wikipedia.org/wiki/User:Fenring)* ）
+
+  `HTML` 用于定义内容的结构和语义，`CSS `用于设计风格和布局。
+
+  比如，您可以使用 `CSS` 来更改内容的字体、颜色、大小、间距，将内容分为多列，或者添加动画及其他的装饰效果。( [MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS) )
+
+  
+
+- **CSS** 主要目标
+
+  除了对网页进行 装饰， `CSS` 还有一个主要目标就是 **将内容与显示分离**。
+
+   CSS 出现之前，如果需要为 `HTML `元素添加样式样式，那么往往需要用到其他的样式元素如 `<font>`，`<i>` 等。
+
+  比如下面这个[例子](https://zh.wikipedia.org/wiki/%E5%B1%82%E5%8F%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8#%E6%A6%82%E8%BF%B0)，我们想要将 **二级标题** `h2` 的字体变为  ***斜体*** ， <span style = 'color:green'>**绿色**</span>，仅一个 `<h2>`元素是不能实现的，因为它只定义了结构上的信息。
+
+  那么通过 `HTML` 提供的 `<font>` 和 `<i>` 元素，我们可以这样实现：
+
+  ```html
+  <h2><font color="green"><i>不使用CSS</i></font></h2>
+  ```
+
+  <h2><font color="green"><i>不使用CSS</i></font></h2>
+
+  这样做虽然能达到我们想要的效果，但是有些缺点：
+
+  - 使 `HTML` 元素变得复杂，如果要实现复杂的样式，需要在单一元素上添加大量用于显示的元素
+  - 不利于维护，修改样式需要找到具体的元素才能修改，结构和表现耦合在一起
+  - 样式无法复用，实现相同的显示效果需要编写大量重复的代码
+
+  使用就能 `CSS` 能很好地解决这些问题，让 `HTML`只表达文档的 **结构**，而 `CSS`表达文档的 **样式**。
+
+  同样是上面的例子，我们使用 `CSS` 来实现:
+
+  ```html
+  <h2>
+      使用CSS
+  </h2>
+  ```
+
+
+  ```css
+  h2 {
+      color:green;
+      font-style:italic;
+  }
+  ```
+
+  效果如下：
+
+  ![image-20210902153043558](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210902153043558.png)
+
+  
+
+  [▶ 在线演示](https://jsbin.com/vamavubono/1/edit?html,css,output)
+
+  这样显示就和内容分开了，维护起来更加容易，文档的结构也清晰许多，并且样式代码能多次复用
+
+- **CSS** 语法
+
+  了解 `CSS` 的强大易用以后，现在我们可以自己写一个 `CSS` 文件了。
+
+  `CSS` 的语法规则非常简单，不用担心写错，即使在编写 `CSS` 的过程中出现语法错误，也不会导致文档无法显示，对于不符合规则的 `CSS` 语句，浏览器会选择忽略，继续渲染下一条样式。
+
+  `CSS` 由多组 **规则** 组成，一条常见的规则如下：
+
+  
+
+  ![image-20210902160924081](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210902160924081.png)
+
+  
+
+  
+
+  - 一条 规则 由 **选择器（Selector）** ，大括号，和 **声明** 组成。
+
+  - 一个规则可以包含多个声明；每条声明都应该包裹在 选择器 后的 大括号内。声明之间用 `;` 相隔。
+
+  - 一条声明内包括 **属性** 和 **属性值** ，属性和属性值用 `:` 分隔。一些属性可能有多个属性值。
+  - `CSS`的注释用 `/* */`包裹。
+  - 如果要为多个选择器设置相同的样式，那么选择器之间用逗号`,`相隔， 见[下例](https://jsbin.com/rubakoyuti/1/edit?html,css,output)
+
+  下面这条规则表示 将文档中的 **所有** `p` 元素 和  `div` 元素的 ：
+
+  宽度设为：`80px`;
+
+  高度设为：`80px`;
+
+  **文字颜色** 设为 ：<span style = 'color:green'>绿色</span>;
+
+  背景色 设置为 ： <span style = 'background-color:black;color:white;width:40px;'>白色</span> ;
+
+  **边框**设置为 ： `1px` , 实线，<span style = 'color:green'>绿色</span>;
+
+  可以看出 `CSS` 的属性还是比较容易理解的，比较直白，遇到生疏的属性查阅后记下来就好了
+
+  ```css
+  p,div {
+      width: 80px;
+      height: 80px;
+      color: green;
+      background-color: white;
+      border: 1px solid green;
+    }
+  ```
+
+  效果如下：
+
+  ![image-20210902162511122](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210902162511122.png)
+
+  
+
+  [▶在线演示](https://jsbin.com/rubakoyuti/1/edit?html,css,output)
+
+  `CSS` 的 属性非常多，需要大家在学习的过程中不断积累，目前掌握一些常用的属性即可。
+
+- **CSS** 的层叠概念
+
+  **层叠**（ Cascading  *[kæsˈkeɪdɪŋ]* ） 是什么意思呢 ?
+
+  根据 [知乎问答](https://www.zhihu.com/question/20077745) 答主 [华南虎](https://www.zhihu.com/people/xander-young) 摘抄的 [论文 ](https://www.wiumlie.no/2006/phd/#ch-introduction)片段（[Cascading Style Sheets](https://www.wiumlie.no/2006/phd/#ch-introduction) - Håkon Wium Lie）：
+
+  > [Håkon Wium Lie](https://zh.wikipedia.org/wiki/%E5%93%88%E8%82%AF%C2%B7%E7%BB%B4%E5%A7%86%C2%B7%E8%8E%B1)  - 哈肯·维姆·莱 ，CSS 开发者之一，以于1994年提出的 CSS 概念而闻名
+
+  >  The process of combining several style sheets – and resolving conflicts if they occur – is known as cascading.  
+  >
+  > 组合多个样式表的过程 —— 如果发生冲突，解决冲突 ——被称为层叠。
+
+  **引入样式表**，有多种方式，每一种方式及 书写样式的顺序 , **选择器**，都会决定**样式的优先级**，优先级高的样式会覆盖优先级低的样式，`CSS` 根据样式的优先层级，对多个样式进行组合，最后应用样式，这样的处理方式就是**层叠**。
+
+  关于 **样式表的引入**，**选择器** 和 **样式的优先级** 会在之后讲解
+
+### 2.如何使用 CSS 
+
+- 引入 `CSS` 的几种方式
+- 消除浏览器的默认样式
+- 项目中对 ` CSS` 的处理 -- 预处理器 （ 随口提一下就好 ），组件中的 `CSS`，公共样式
+
+### 3. CSS 主要内容
+
+一些基础内容
+
+- 选择器种类，选择器权重，优先级（包括继承）
+- 伪类，伪元素
+- 盒模型
+- 文档流
+- 布局
+- 响应式（媒体查询）
+- 视口
+- 单位
+
+### 4.CSS3 新特性
+
+- 动画
+- 3D
+- 阴影
+- ......
+
+### 5.[CSS如何运作](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/First_steps/How_CSS_works)
+
+
+
+![rendering](C:\Users\LX\Desktop\rendering.svg)
+
+
+
+### 6.CSS 未来趋势
