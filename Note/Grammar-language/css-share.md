@@ -1,4 +1,4 @@
-# CSS 基础知识梳理
+# CSS 入门:基础知识梳理
 
 🙎‍♂️：润华 
 
@@ -16,7 +16,7 @@
 
   ​															    
 
-  ​															 	（*维基百科 [层叠样式表](https://zh.wikipedia.org/wiki/%E5%B1%82%E5%8F%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8)，图片作者：[Fenring](https://en.wikipedia.org/wiki/User:Fenring)* ）
+  <center>( 维基百科<a href = 'https://zh.wikipedia.org/wiki/%E5%B1%82%E5%8F%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8'><i> 层叠样式表</i>，</a> 图片作者：<a href = 'https://en.wikipedia.org/wiki/User:Fenring'><i>Fenring</i></a> )</center>
 
   `HTML` 用于定义内容的结构和语义，`CSS `用于设计风格和布局。
 
@@ -50,11 +50,11 @@
 
   同样是上面的例子，我们使用 `CSS` 来实现:
 
-  ```html
-  <h2>
-      使用CSS
-  </h2>
-  ```
+```html
+<h2>
+    使用CSS
+</h2>
+```
 
 
   ```css
@@ -110,7 +110,7 @@
 
   **边框**设置为 ： `1px` , 实线，<span style = 'color:green'>绿色</span>;
 
-  可以看出 `CSS` 的属性还是比较容易理解的，比较直白，遇到生疏的属性查阅后记下来就好了
+  可以看出 `CSS` 的属性还是比较容易理解的，比较直白，遇到生疏的属性查阅后记下来就好了。
 
   ```css
   p,div {
@@ -138,43 +138,149 @@
 
   根据 [知乎问答](https://www.zhihu.com/question/20077745) 答主 [华南虎](https://www.zhihu.com/people/xander-young) 摘抄的 [论文 ](https://www.wiumlie.no/2006/phd/#ch-introduction)片段（[Cascading Style Sheets](https://www.wiumlie.no/2006/phd/#ch-introduction) - Håkon Wium Lie）：
 
-  > [Håkon Wium Lie](https://zh.wikipedia.org/wiki/%E5%93%88%E8%82%AF%C2%B7%E7%BB%B4%E5%A7%86%C2%B7%E8%8E%B1)  - 哈肯·维姆·莱 ，CSS 开发者之一，以于1994年提出的 CSS 概念而闻名
+  > [Håkon Wium Lie](https://zh.wikipedia.org/wiki/%E5%93%88%E8%82%AF%C2%B7%E7%BB%B4%E5%A7%86%C2%B7%E8%8E%B1)  - 哈肯·维姆·莱 ，CSS 开发者之一，以于1994年提出的 CSS 概念而闻名 ( [维基百科](https://zh.wikipedia.org/wiki/%E5%93%88%E8%82%AF%C2%B7%E7%BB%B4%E5%A7%86%C2%B7%E8%8E%B1) )
 
   >  The process of combining several style sheets – and resolving conflicts if they occur – is known as cascading.  
   >
   > 组合多个样式表的过程 —— 如果发生冲突，解决冲突 ——被称为层叠。
 
-  **引入样式表**，有多种方式，每一种方式及 书写样式的顺序 , **选择器**，都会决定**样式的优先级**，优先级高的样式会覆盖优先级低的样式，`CSS` 根据样式的优先层级，对多个样式进行组合，最后应用样式，这样的处理方式就是**层叠**。
+  样式引入的顺序 , **选择器权重**，都会决定**样式的优先级**，优先级高的样式会覆盖优先级低的样式，`CSS` 根据样式的优先层级，对多个样式进行组合，最后应用样式，这样的处理方式就是**层叠**。
 
-  关于 **样式表的引入**，**选择器** 和 **样式的优先级** 会在之后讲解
+  关于 **选择器** 和 **样式的优先级** 会在之后讲解。如果想要先了解,可以参见  [MDN-CSS选择器](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/Selectors) ,  [MDN-优先级是如何计算的](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Specificity#%E4%BC%98%E5%85%88%E7%BA%A7%E6%98%AF%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E7%9A%84%EF%BC%9F)
 
 ### 2.如何使用 CSS 
 
-- 引入 `CSS` 的几种方式
-- 消除浏览器的默认样式
-- 项目中对 ` CSS` 的处理 -- 预处理器 （ 随口提一下就好 ），组件中的 `CSS`，公共样式
+写完 `CSS` ，需要将其应用到文档才能生效，引入`CSS` 的方式有很多种，可以将`CSS`以文件形式引入，也可以在`HTML`中使用 `<style>` 标签引入，还可以直接将其 **内联** 到 `HTML` 元素中。下面将介绍引入 `CSS` 的几种方式。
+
+#### 1.引入 `CSS` 的几种方式
+
+1. 通过`<link>` 元素在 `HTML` 的 `head` 内引入**外部** `CSS` 文件
+
+   ```html
+   <link rel="stylesheet" href="https://www.w3school.com.cn/html/csstest1.css"/ >
+   ```
+
+   > `csstest1.css`的 [文件](https://www.w3school.com.cn/html/csstest1.css) 中，定义了 一条规则，将页面的 `div`元素背景色都设置为 黑色
+
+2. 在`HTML `的`<style>` 标签中书写 **内部样式**，只对当前页面生效
+
+   ```html
+   <style>
+   div {
+       width: 80px;
+       height: 80px;
+       background-color: red;
+     }
+   </style>
+   ```
+
+3. 在 `HTML` 元素的 `style` 属性中编写 **内联样式**，只对当前元素生效, **权重高,**仅次于`!important`修饰符
+
+   ```html
+   <div style="background-color: green;"></div>
+   ```
+
+这三种方式 **内联样式** 的优先级最高, 所谓 *近水楼台先得月*
+
+当对元素应用样式产生冲突(对同一个元素由多个声明)时，优先级高的样式会将优先级低的样式覆盖。不过,样式的优先级由选择器的 **权重 **决定,选择器 权重 相同的情况下,才会考虑 样式 在文档中的 顺序 
+
+下面先对 **选择器** 作介绍
+
+#### 2.CSS 选择器
+
+- 选择器种类
+
+  - 通配符 
+
+  - 元素选择器
+  - 类选择器
+  - id 选择器
+  - 伪类选择器
+  - 伪元素选择器
+  - 标签属性选择器
+  - 关系选择器
+
+- 样式的继承
+
+- 选择器权重
+
+#### 3.浏览器的默认样式
+
+通过[上面](#1.引入 `CSS` 的几种方式) 所提到几种方式引入的样式都称为`用户样式`，除了 用户样式，浏览器内置了一种默认样式，称为`用户代理样式（user agent stylesheet）` ，以下都称为 **默认样式**（浏览器也被称为 `用户代理`）
+
+- 默认样式的作用：
+
+  默认样式样式保证了网页的基本排版，当元素没有指定的样式时，浏览器会按照默认样式来渲染元素。
+
+  比如，一级标题通常是大号加粗字体且独占一行，二级标题也独占一行但字号会小一点，还比如列表的样式，在每项前添加圆点，以表示这些文字不是独立存在的。
+
+  
+
+  ![image-20210903112901867](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210903112901867.png)
+
+  
+
+  <center><i>chrome浏览器一级标题的默认样式(可以在开发者工具中查看)</i></center
+
+  
+
+  ![image-20210903112939736](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210903112939736.png)
+
+  ![image-20210903113036569](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210903113036569.png)
+
+  
+
+  <center><i>chrome浏览器列表的默认样式</i></center>
+
+  [▶在线演示](https://jsbin.com/lupihahadu/1/edit?html,css,output)
+
+  浏览器的默认样式对这些都有预设，如果用户不满意，可以自己写样式覆盖掉。
+
+  [👉查看 webkit 内核浏览器默认样式](http://trac.webkit.org/browser/trunk/Source/WebCore/css/html.css)
+
+- 默认样式带来的问题：
+
+  不同的浏览器的默认样式不一样,甚至同一个浏览器,版本不同,默认样式也会有区别,所以同一个网页在不同的浏览器中会呈现出不同的效果
+
+  > ( 并且每个浏览器对 [CSS规范](https://www.w3.org/Style/CSS/current-work.en.html) 的实现有差异, 也会导致网页的表现不一样, 通常需要解决浏览器的 兼容性问题  [MDN-常见的跨浏览器问题](https://developer.mozilla.org/zh-CN/docs/Learn/Tools_and_testing/Cross_browser_testing/HTML_and_CSS#%E5%B8%B8%E8%A7%81%E7%9A%84%E8%B7%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E9%97%AE%E9%A2%98)  对这方面有一些说明,可参考 )
+
+  并且,有时候浏览器的默认样式,我们不满意,比如 `chrome` 的默认样式会给`body` 元素添加 `8px` 的外边距:
+
+  
+
+  ![image-20210903115432884](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210903115432884.png)
+
+  
+
+- 消除默认样式：
+
+  可以针对某一个样式,自己写一条规则覆盖掉默认样式
+
+  引入 [normalize.css](https://github.com/necolas/normalize.css/blob/master/normalize.css) 对样式进行统一
+
+#### 4.项目中对 ` CSS` 的处理
+
+- 预处理器 如 [less](https://less.bootcss.com/)  
+
+  对 CSS 进行了一些扩展, 使用 [嵌套](https://less.bootcss.com/#%E5%B5%8C%E5%A5%97%EF%BC%88nesting%EF%BC%89) 的方式书写代码,让代码更加简洁,还提供了 **变量** 和 **函数** 等其他功能
 
 ### 3. CSS 主要内容
 
-一些基础内容
+一些基础内容-主要是布局
 
-- 选择器种类，选择器权重，优先级（包括继承）
-- 伪类，伪元素
-- 盒模型
-- 文档流
-- 布局
-- 响应式（媒体查询）
-- 视口
-- 单位
+#### 1.盒模型
 
-### 4.CSS3 新特性
+#### 2.文档流
 
-- 动画
-- 3D
-- 阴影
-- ......
+#### 3.布局
 
-### 5.[CSS如何运作](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/First_steps/How_CSS_works)
+#### 4.响应式（媒体查询）
+
+#### 5.视口
+
+#### 6.单位
+
+### 4.[CSS如何运作](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/First_steps/How_CSS_works)
 
 
 
@@ -182,4 +288,10 @@
 
 
 
-### 6.CSS 未来趋势
+### 5.CSS3 新特性
+
+- 动画
+- 3D
+- 阴影
+- 计算,css变量
+
