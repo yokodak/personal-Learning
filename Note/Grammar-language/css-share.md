@@ -182,7 +182,7 @@
 
 这三种方式 **内联样式** 的优先级最高, 所谓 *近水楼台先得月*
 
-当对元素应用样式产生冲突(对同一个元素由多个声明)时，优先级高的样式会将优先级低的样式覆盖。不过,样式的优先级由选择器的 **权重 **决定,选择器 权重 相同的情况下,才会考虑 样式 在文档中的 顺序 
+当对元素应用样式产生冲突(对同一个元素由多个声明)时，优先级高的样式会将优先级低的样式覆盖。不过,样式的优先级由选择器的 **权重 **决定, 选择器 权重 相同的情况下,才会考虑 样式 在文档中的 顺序 
 
 下面先对 **选择器** 作介绍
 
@@ -190,7 +190,7 @@
 
 - 选择器种类
 
-  - 通配符 
+  - 通配符
 
   - 元素选择器
   - 类选择器
@@ -206,7 +206,7 @@
 
 #### 3.浏览器的默认样式
 
-通过[上面](#1.引入 `CSS` 的几种方式) 所提到几种方式引入的样式都称为`用户样式`，除了 用户样式，浏览器内置了一种默认样式，称为`用户代理样式（user agent stylesheet）` ，以下都称为 **默认样式**（浏览器也被称为 `用户代理`）
+通过[上面](#1.引入 的几种方式) 所提到几种方式引入的样式都称为`用户样式`，除了 用户样式，浏览器内置了一种默认样式，称为`用户代理样式（user agent stylesheet）` ，以下都称为 **默认样式**（浏览器也被称为 `用户代理`）
 
 - 默认样式的作用：
 
@@ -264,11 +264,76 @@
 
   对 CSS 进行了一些扩展, 使用 [嵌套](https://less.bootcss.com/#%E5%B5%8C%E5%A5%97%EF%BC%88nesting%EF%BC%89) 的方式书写代码,让代码更加简洁,还提供了 **变量** 和 **函数** 等其他功能
 
-### 3. CSS 主要内容
-
-一些基础内容-主要是布局
+### 3. CSS 基础内容
 
 #### 1.盒模型
+
+在 `CSS` 中，所有的元素都被一个个的“盒子（box）”包围着 ( [MDN-盒模型](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model) )
+
+`CSS` 中将盒子分为 `块级盒子`和`内联盒子`,他们在页面上的表现不一样
+
+- 块级盒子( `display:block` ) 有以下特点
+
+  - 默认宽度撑满父元素  [▶在线演示](https://jsbin.com/resupowehi/1/edit?html,css,output)
+  - 独占一行显示 [▶在线演示](https://jsbin.com/yijekuhito/1/edit?html,css,output)
+  - 设置宽(`width`) 高(`height `)有效
+  - 内边距（`padding`）, 外边距（`margin`） 和 边框（`border`） 会将其他元素从当前盒子周围“推开”
+
+- 内联盒子( `display:inline` ) 有以下特点
+
+  - 不会独占一行
+  - 设置宽(`width`) 高(`height `)**无效**
+  - 垂直方向的内边距、外边距以及边框 会被应用但是不会推开其他盒子 [▶在线演示](https://jsbin.com/rulonefate/1/edit?html,css,output)
+  - 水平方向的内边距、外边距以及边框会被应用且会把其他盒子推开。
+
+  通过 `CSS ` 的 `display` 属性, 可以改变盒子的**外部**显示类型( 在其他盒子中怎样显示  )
+
+  将  `display` 设置为 `inline-block` 可以让盒子不独占一行, 同时宽高的设置也有效,相当于结合了块级盒子和内联盒子的特点.
+
+- 盒模型
+
+  **标准盒模型**,盒子的宽和高 **不包括** 外边距, 边框, 内边距
+
+  页面上渲染的盒子的大小包括 :内容大小(也就是宽高属性设置的大小), 内边距,边框,外边距
+
+  以一个块级盒子为例  [▶在线演示](https://jsbin.com/rutowavida/1/edit?html,css,output)
+
+  ```css
+  div {
+    display:block;
+    height:100px;
+    width:100px;
+    background-color: black;
+    color:white;
+    border: 2px solid red;
+    margin:20px;
+    padding:20px;
+  }
+  ```
+
+  ![image-20210903175447626](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210903175447626.png)
+
+  
+
+  <center><i>标准盒模型</i></center>
+
+  
+
+  **替代(IE)盒模型** 盒子的宽和高 **包括** 外边距, 边框, 内边距,实际**盒子内容**的宽高还要减去外边距, 边框, 内边距
+
+  目前绝大多数浏览器默认采用的是 **标准盒模型** (`box-sizing : content-box;`)
+
+  IE浏览器 默认使用替代盒模型，没有可用的机制来切换。（IE8+ 支持使用`box-sizing` 进行切换) -  [MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model)
+
+  将 `box-sizing` 属性设置为 `border-box`可以将盒子模型变为 替代盒模型,不过大多数情况下我们不会专门作这样做
+
+   [▶在线演示](https://jsbin.com/rutowavida/1/edit?html,css,output)
+
+  ![image-20210903180837691](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210903180837691.png)
+
+  <center><i>替代盒模型</i></center>
+
+  
 
 #### 2.文档流
 
@@ -285,6 +350,16 @@
 
 
 ![rendering](C:\Users\LX\Desktop\rendering.svg)
+
+
+
+![render-1](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/render-1.png)
+
+
+
+
+
+![render-5](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/render-5.png)
 
 
 
