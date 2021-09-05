@@ -323,9 +323,9 @@
 
   目前绝大多数浏览器默认采用的是 **标准盒模型** (`box-sizing : content-box;`)
 
-  IE浏览器 默认使用替代盒模型，没有可用的机制来切换。（IE8+ 支持使用`box-sizing` 进行切换) -  [MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model)
+  IE浏览器 默认使用替代盒模型，没有可用的机制来切换。（IE8+ 支持使用`box-sizing` 进行切换 -  [MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model)) 
 
-  将 `box-sizing` 属性设置为 `border-box`可以将盒子模型变为 替代盒模型,不过大多数情况下我们不会专门作这样做
+  将 `box-sizing` 属性设置为 `border-box`可以将盒子模型变为 替代盒模型
 
    [▶在线演示](https://jsbin.com/rutowavida/1/edit?html,css,output)
 
@@ -337,19 +337,107 @@
 
 #### 2.文档流
 
-#### 3.布局
+- 正常布局流
 
-#### 4.响应式（媒体查询）
+  浏览器默认的布局方式，页面上的元素按照 `HTML` 文档中的先后顺序出现
 
-#### 5.视口
+  [▶在线演示](https://jsbin.com/jadagubecu/1/edit?html,css,output)
 
-#### 6.单位
+  当正常流布局不能满足我们的要求时，我们可以通过一些 **布局技术**  来实现想要的效果，比如：
 
-### 4.[CSS如何运作](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/First_steps/How_CSS_works)
+  - 设置 `display` 属性为 `block`, `inline`或`inline-block`来改变布局
+  - 开启浮动 `float`
+  - `flex` 布局
+  - `grid` 布局 （见 [MDN-网格](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Grids) ）
+  - 定位
+
+  其中 开启浮动 和 绝对定位 会使元素 脱离文档流，也就是说它所占用的空间会被忽略，其他元素在布局时不会考虑它，关于脱离文档流，可以参考 [知乎问答-脱离文档流](https://www.zhihu.com/question/24529373)  
+
+  `float ` 浮动及清除浮动可以参见 [MDN-float](https://developer.mozilla.org/zh-CN/docs/Web/CSS/float), 下面主要对 `flex`布局 和 `定位`作介绍。
+
+#### 3.flex 弹性布局
+
+弹性盒子布局：一维页面布局，弹性布局使得页面布局变得更加容易，如居中子元素，等量分配子项空间等。
+
+- 弹性容器(盒子)
+
+  通过将（块级）盒子的 `display ` 属性设置为 `flex` , 可以将盒子变为弹性容器。
+
+  > 假如你想设置行内元素为 flexible box，也可以置 [`display`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/display) 属性的值为 `inline-flex` (--[MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Flexbox#%E6%8C%87%E5%AE%9A%E5%85%83%E7%B4%A0%E7%9A%84%E5%B8%83%E5%B1%80%E4%B8%BA_flexible))
+
+  弹性容器具有以下几个特点：
+
+  - 子元素自动成为弹性项（`flex item` ） 
+  - 容器存在两根轴，主轴 ( `main axis`) 和 交叉轴 （`cross axis` ), 两轴相互垂直。
+  - 弹性项默认沿主轴排列，主轴默认为水平方向。
+
+  [▶在线演示](https://jsbin.com/qeyuhakoqa/1/edit?html,css,output)
+
+  通过设置弹性容器的属性，可以决定弹性容器中弹性项的排列方式
+
+  1. 弹性项排列的方向（即主轴的方向）`flex-direction`
+
+     - `row`（默认值）：主轴为水平方向，从左至右
+     - `row-reverse`：主轴为水平方向，从右至左。
+     - `column`：主轴为垂直方向，从上到下。
+     - `column-reverse`：主轴为垂直方向，从下至上。
+
+     [▶在线演示](https://jsbin.com/jitanovoro/1/edit?html,css,output)
+
+  2. 弹性项是否换行展示
+
+     默认情况下，项目都排列在一条轴线上，如果一条轴线放不下，那么通过`flex-wrap`属性来决定是否换行显示。
+
+     - `nowrap`（默认）：不换行。弹性项的大小会被压缩，根据项目原本的大小，按比例分配空间  [▶在线演示](https://jsbin.com/ripugobewo/1/edit?html,css,output)
+     - `wrap`：换行，从上到下排列。
+     - `wrap-reverse`：换行，从下至上排列。
+
+  3. 弹性项对齐方式 & 空间分布  （ [阮一峰-Flex布局教程：语法篇](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?__cf_chl_managed_tk__=pmd_q9NITzCo6yNMydZpx3XMFEP9z7KTI._WNgpTZ6.S8Pc-1630834607-0-gqNtZGzNAtCjcnBszQkl) ）
+
+     `justify-content`属性定义了项目在**主轴**上的对齐方式。
+
+     - `flex-start`（默认值）：左对齐
+     - `flex-end`：右对齐
+     - `center`： 居中 
+     - `space-between`：两端对齐，项目之间的间隔都相等。
+     - `space-around`：每个项目两侧的间隔相等。
+
+     [▶ 在线演示](https://jsbin.com/weruduqepe/1/edit?html,css,output)
+
+     `align-items`属性定义项目在**交叉轴**（与主轴垂直）上如何对齐。
+
+     - `stretch`（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+
+     - `flex-start`：交叉轴的起点对齐。
+
+     - `flex-end`：交叉轴的终点对齐。
+
+     - `center`：交叉轴的中点对齐。[▶ 在线演示](https://jsbin.com/bovapocipu/1/edit?html,css,output)
+
+     - `baseline`: 项目的第一行文字的基线对齐。
+
+       
+
+     ![bg2015071011](https://gitee.com/yaorunhua/runbed/raw/master/img/yokoda/bg2015071011.png)
+
+     <center><i>交叉轴对齐方式 - <a href ='https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?__cf_chl_managed_tk__=pmd_q9NITzCo6yNMydZpx3XMFEP9z7KTI._WNgpTZ6.S8Pc-1630834607-0-gqNtZGzNAtCjcnBszQkl'>阮一峰-Flex布局教程：语法篇</a></i></center>
+
+
+- 弹性项
+
+  
 
 
 
-![rendering](C:\Users\LX\Desktop\rendering.svg)
+#### 4.定位
+
+#### 5.响应式
+
+#### 6.视口
+
+#### 7.单位
+
+### 4.CSS如何运作
 
 
 
