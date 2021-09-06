@@ -319,7 +319,7 @@
 
   
 
-  **替代(IE)盒模型** 盒子的宽和高 **包括** 外边距, 边框, 内边距,实际**盒子内容**的宽高还要减去外边距, 边框, 内边距
+  **替代(IE)盒模型** 盒子的宽和高 **包括** 盒子内容，边框和内边距,实际**盒子内容**的宽高还要减去边框和内边距（不包括外边距）
 
   目前绝大多数浏览器默认采用的是 **标准盒模型** (`box-sizing : content-box;`)
 
@@ -392,7 +392,7 @@
      - `wrap`：换行，从上到下排列。
      - `wrap-reverse`：换行，从下至上排列。
 
-  3. 弹性项对齐方式 & 空间分布  （ [阮一峰-Flex布局教程：语法篇](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?__cf_chl_managed_tk__=pmd_q9NITzCo6yNMydZpx3XMFEP9z7KTI._WNgpTZ6.S8Pc-1630834607-0-gqNtZGzNAtCjcnBszQkl) ）
+  3. 弹性项对齐方式 & 空间分布  （摘自： [阮一峰-Flex布局教程：语法篇](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?__cf_chl_managed_tk__=pmd_q9NITzCo6yNMydZpx3XMFEP9z7KTI._WNgpTZ6.S8Pc-1630834607-0-gqNtZGzNAtCjcnBszQkl) ）
 
      `justify-content`属性定义了项目在**主轴**上的对齐方式。
 
@@ -420,16 +420,119 @@
 
      ![bg2015071011](https://gitee.com/yaorunhua/runbed/raw/master/img/yokoda/bg2015071011.png)
 
-     <center><i>交叉轴对齐方式 - <a href ='https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?__cf_chl_managed_tk__=pmd_q9NITzCo6yNMydZpx3XMFEP9z7KTI._WNgpTZ6.S8Pc-1630834607-0-gqNtZGzNAtCjcnBszQkl'>阮一峰-Flex布局教程：语法篇</a></i></center>
+     
+     
+     <center><i>图片：交叉轴对齐方式 - <a href ='https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?__cf_chl_managed_tk__=pmd_q9NITzCo6yNMydZpx3XMFEP9z7KTI._WNgpTZ6.S8Pc-1630834607-0-gqNtZGzNAtCjcnBszQkl'>阮一峰-Flex布局教程：语法篇</a></i></center
 
 
 - 弹性项
 
+  弹性容器的子元素称为弹性项，除了对弹性容器的属性进行设置来改变弹性布局，也可以对每个弹性项单独配置属性，来控制弹性项的顺序，弹性系数等
   
+  以下内容摘自： [阮一峰-Flex布局教程：语法篇 ](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?__cf_chl_managed_tk__=pmd_q9NITzCo6yNMydZpx3XMFEP9z7KTI._WNgpTZ6.S8Pc-1630834607-0-gqNtZGzNAtCjcnBszQkl)（有部分修改）
+  
+  - 弹性项的顺序   [▶在线演示](https://jsbin.com/beriporija/1/edit?html,css,output)
+  
+    `order`属性定义项目的排列顺序。数值越小，排列越靠前，**默认为`0`**。
+  
+  - 弹性项的放大比例  [▶在线演示](https://jsbin.com/jexuremeqa/1/edit?html,css,output)
+  
+    `flex-grow`属性定义项目的放大比例，**默认为`0`**，即如果存在剩余空间，也不放大。
+  
+    如果所有项目的`flex-grow`属性都为1，则它们将等分剩余空间（如果有的话），如果一个项目的`flex-grow`属性为 `1`，其他项目都为`0`，则前者将占据剩余所有空间。
+  
+  - 弹性项的缩小比例
+  
+    `flex-shrink`属性定义了项目的缩小比例，**默认为`1`**，即如果空间不足，该项目将缩小。
+  
+    如果所有项目的`flex-shrink`属性都为1，当空间不足时，都将等比例缩小。如果一个项目的`flex-shrink`属性为0，其他项目都为1，则空间不足时，前者不缩小。
+  
+    
+  
+    ![img](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/bg2015071015.jpg)
+  
+    
+  
+  <center><i>图片：<code>flex-shrink：0 </code> <a href ='https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html?__cf_chl_managed_tk__=pmd_q9NITzCo6yNMydZpx3XMFEP9z7KTI._WNgpTZ6.S8Pc-1630834607-0-gqNtZGzNAtCjcnBszQkl'>阮一峰-Flex布局教程：语法篇</a></i></center
+  
+  
+  - 弹性项初始占据空间
+  
+    `flex-basis`属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的**默认值为`auto`**，即项目的本来大小。
+  
+  - 简写属性 `flex`
+  
+    `flex`属性是`flex-grow`, `flex-shrink` 和 `flex-basis`的简写，默认值为`0 1 auto`。后两个属性可选。
 
+`flex` 实例可参考 [Flex 布局教程：实例篇](https://www.ruanyifeng.com/blog/2015/07/flex-examples.html)
 
+目前大多数浏览器（如 Firefox, Chrome, Opera, Microsoft Edge 和 IE 11）都支持 `flex`布局，不过如果你要在比较老的浏览器使用`flex`,那需要考虑其兼容性问题。
 
 #### 4.定位
+
+通过定位，可以将元素置于文档中的任意位置，设置`position` 属性来决定元素的定位模式。
+
+> 注：以下关于元素定位的原点（即元素相对于什么位置进行偏移）不太准确，具体可以参见 [MDN-布局和包含块](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Containing_block)
+
+- 静态定位 
+
+  `position:static;`元素的默认定位,正常布局流，下文中 开启定位，都指 *非静态定位* 的情况
+
+- 相对定位
+
+  `position: relative;`
+
+  相对于元素的默认位置进行偏移，通过设置`top`,`left`, `right`, `bottom`来指定元素的位置。
+
+  开启相对定位后，如果元素之间重叠，则开启相对定位的元素会覆盖静态定位的元素。
+
+  [▶ 在线演示](https://jsbin.com/ruguzojita/1/edit?html,css,output)
+
+- 绝对定位
+
+  `position: absolute;` 
+
+  开启绝对定位的元素会从正常布局中脱离，即 脱离文档流，元素相对于其 **包含块 ** 定位，包含块 是离该元素最近的开启了 `relative` ，`absolute`，`fixed`或 `sticky` 定位的 **祖先** 元素，如果没有开启了这些定位的祖先元素，那么其包含块为 **初始块容器**。（简单记作元素根据页面最左上角定位就行了）
+
+  [▶ 在线演示](https://jsbin.com/cezigonamo/1/edit?html,css,output)
+
+- 固定定位
+
+  ` position: fixed;`,固定可以看作是一种特殊的绝对定位，不过，固定定位的元素的位置是相对于浏览器**视口** 的 ，下面是一个使用 固定定位 固定页面顶部标题的 [例子-MDN](https://mdn.github.io/learning-area/css/css-layout/positioning/6_fixed-positioning.html)
+
+  
+
+  ![fixed2](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/fixed2.gif)
+
+  
+
+- 粘滞定位
+
+  `position: sticky;` 
+
+  粘滞定位，表现得和相对定位的元素一样，不过当它滚动到页面某个特定的位置时（如视口顶部），它就固定在那个位置了，下面是一个粘滞定位的 [例子-MDN](https://mdn.github.io/learning-area/css/css-layout/positioning/7_sticky-positioning.html), 当粘滞项滚动到视口顶部，就会固定在那。
+
+  
+
+  ![sticky2](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/sticky2.gif)
+
+  
+
+- 元素的层级
+
+  开启定位后，元素之间可能会发生重叠，如下：
+
+  ![image-20210906111045833](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210906111045833.png)
+
+  
+
+  如果想要改变层叠的顺序，可以通过设置 `z-index` 的属性值实现，
+
+  值越大，层级越高，祖先元素的层级再高也不会覆盖其子元素 [▶在线演示](https://jsbin.com/piwisamimi/1/edit?html,css,output)
+
+  > 网页也有一个z轴：一条从屏幕表面到你的脸（或者在屏幕前面你喜欢的任何其他东西）的虚线 。
+  >
+  > [z-index](https://developer.mozilla.org/zh-CN/docs/Web/CSS/z-index) 值影响定位元素位于该轴上的位置；正值将它们向上移动，负值将它们向下移动。默认情况下，定位的元素都具有 `z-inde` 为 `auto`，实际上为`0`（ [MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Positioning) ）
 
 #### 5.响应式
 
@@ -438,6 +541,17 @@
 #### 7.单位
 
 ### 4.CSS如何运作
+
+参见：
+
+- [浏览器如何渲染 HTML & CSS](http://layout.imweb.io/article/how-to-render.html)
+- [渲染页面：浏览器的工作原理](https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work)
+- [关键渲染路径](https://developer.mozilla.org/zh-CN/docs/Web/Performance/Critical_rendering_path)
+- [从css到页面样式渲染](https://segmentfault.com/a/1190000018759693)
+
+大概流程：
+
+- 
 
 
 
@@ -453,8 +567,21 @@
 
 ### 5.CSS3 新特性
 
+可以参考 [个人总结（css3新特性）](https://segmentfault.com/a/1190000010780991)
+
 - 动画
-- 3D
+
+  `transform`
+
 - 阴影
-- 计算,css变量
+
+  `box-shadow`
+
+- 边框圆角
+
+- 
+
+- 计算函数 , css变量
+
+  
 
