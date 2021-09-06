@@ -190,19 +190,454 @@
 
 - 选择器种类
 
-  - 通配符
+  - **通配符** 
 
-  - 元素选择器
-  - 类选择器
-  - id 选择器
-  - 伪类选择器
-  - 伪元素选择器
-  - 标签属性选择器
-  - 关系选择器
+    在`CSS`中，一个星号（`*`）就是一个通配选择器，它可以匹配任意类型的HTML元素，这意味着它会将所有的元素进行渲染。
 
-- 样式的继承
+    通配符和其他选择器搭配时，省略掉通配选择器不会影响效果，例如，`*.class`与`.class`的效果完全相同。
 
-- 选择器权重
+    ```html
+    <style>
+    * {
+     	color: red; /*所有元素的字体颜色都会设置成红色*/
+      }  
+    </style>
+    ```
+
+  - **元素选择器**
+
+    `CSS`元素选择器（也叫做类型选择器）通过`node`节点名称匹配元素，在单独使用时，元素选择器会匹配文档中 **所有 **此类型的元素。
+
+    ```html
+    <style>
+    div {
+    	background-color: red;
+        color: green;
+    }
+    </style>
+    ```
+
+    上例代码，文档中 **所有的div** 的背景色会变成 红色，字体变为绿色。
+
+  - **类选择器**
+
+    > 在一个HTML文档中，`CSS` 类选择器会根据元素的**类属性**中的内容匹配元素。
+    >
+    > 类属性被定义为一个以空格分隔的列表项，在这组类名中，必须有一项与类选择器中的类名完全匹配，此条样式声明才会生效。
+
+    类选择器的语法：
+
+    > . 类名{ 样式声明 }
+
+    例如：
+
+    ```html
+    <style>
+    .classy {
+    	background-color: DodgerBlue;
+    }
+    </style>
+    
+    <span class="classy">Here is a span with some text.</span>
+    <span>Here is another.</span>
+    ```
+
+    上面的代码产生的效果如下：
+
+    <span style = 'background-color:DodgerBlue'>Here is a span with some text.</span>
+
+    <span>Here is another.</span>
+
+  - **id 选择器**
+
+    > 在一个`HTML`文档中,`CSS` ID 选择器会根据该元素的 ID 属性中的内容匹配元素,元素 ID 属性名必须与选择器中的 ID 属性名完全匹配，此条样式声明才会生效。
+
+    id选择器的语法：
+
+    > #id属性值 { 样式声明 }
+
+    例如：
+
+    ```html
+    <style>
+    #identified {
+      background-color: DodgerBlue;
+    }
+    </style>
+    <span id="identified">Here's a span with some text.</span>
+    <span>Here's another.</span>
+    ```
+
+    产生的效果如下：
+
+    <span style = 'background-color:DodgerBlue'>Here is a span with some text.</span>
+
+    <span>Here is another.</span>
+
+  - **伪类选择器**
+
+    > CSS **伪类** 是添加到选择器的关键字，指定要选择的**元素的特殊状态**。
+    >
+    > 伪类连同伪元素一起，他们允许你不仅仅是根据文档 DOM 树中的内容对元素应用样式，而且还允许你根据诸如像导航历史这样的外部因素来应用样式（ 例如 [:visited ](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:visited)）。
+    >
+    > 同样的，可以根据内容的状态（例如在一些表单元素上的 [:checked](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:checked)），或者鼠标的位置（例如 [:hover](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:hover) 让你知道是否鼠标在一个元素上悬浮）来应用样式。
+
+    例如：
+
+    ```html
+    <style>
+        .example:hover {
+            box-shadow: 0 0 10px black;
+        }
+    </style>
+    <button class="example">
+        点我搜索
+    </button>
+    ```
+
+    效果如下：
+
+    [演示效果](https://jsbin.com/mowafogeku/1/edit?html,css,output)
+
+    伪类选择器标准[索引](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Pseudo-classes)
+
+  - **伪元素选择器**
+
+    > 伪元素是一个附加至选择器末的关键词，允许你对被选择元素的特定部分修改样式。例如 [::first-line](https://developer.mozilla.org/zh-CN/docs/Web/CSS/::first-line) 伪元素可改变段落首行文字的样式。
+
+    ```html
+    <style>
+    p::first-line {
+      color: blue;
+      text-transform: uppercase;
+    }
+    </style>
+    <p>hello<br>hello</p>
+    ```
+
+    效果如下：
+
+    <span style = 'color:blue'>HELLO</span>
+
+    <span>hello</span>
+
+    伪元素选择器标准[索引](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Pseudo-elements)
+
+  - **标签属性选择器**
+
+    > CSS **属性选择器**通过已经存在的属性名或属性值匹配元素。
+
+    属性选择器的语法：
+
+    ```
+    [attr]
+    ```
+
+    表示带有以 attr 命名的属性的元素。
+
+    ```html
+    <style>
+    a[title] {
+      color: purple;
+    }
+    </style>
+    /* 存在title属性的<a> 元素 */
+    ```
+
+    
+
+    ```
+    [attr=value]
+    ```
+
+    表示带有以 attr 命名的属性，且属性值为 value 的元素。
+
+    ```html
+    <style>
+    span { background-color: white; }
+    div > span {
+      background-color: DodgerBlue;
+    }
+    </style>
+    /* 存在title属性值为abc的<a> 元素 */
+    ```
+
+    
+
+    ```
+    [attr~=value]
+    ```
+
+    表示带有以 attr 命名的属性的元素，并且该属性是一个以空格作为分隔的值列表，其中至少有一个值为 value。
+
+    ```html
+    <style>
+    a[class~="logo"] {
+      padding: 2px;
+    }
+    </style>
+     /* 存在class属性并且属性值包含以空格分隔的"logo"的<a>元素 */   
+    ```
+
+    
+
+    ```
+    [attr|=value]
+    ```
+
+    表示带有以 attr 命名的属性的元素，属性值为“value”或是以“value-”为前缀（"`-`"为连字符，Unicode 编码为 U+002D）开头。典型的应用场景是用来匹配语言简写代码（如 zh-CN，zh-TW 可以用 zh 作为 value）。
+
+    ```
+    [attr^=value]
+    ```
+
+    表示带有以 attr 命名的属性，且属性值是以 value 开头的元素。
+
+    ```
+    [attr$=value]
+    ```
+
+    表示带有以 attr 命名的属性，且属性值是以 value 结尾的元素。
+
+    ```
+    [attr*=value]
+    ```
+
+    表示带有以 attr 命名的属性，且属性值至少包含一个 value 值的元素。
+
+    值得一提的是，`[id=value]`与id选择器的效果相同，`[class=value]`与类选择器的效果相同。
+
+  - **关系选择器**
+
+    关系选择器通常有四种，分别是后代选择器、子代选择器、相邻兄弟选择器、通用兄弟选择器。
+
+    首先是**后代选择器**：后代组合器（通常用单个空格（` `）字符表示）组合了两个选择器，如果第二个选择器匹配的元素具有与第一个选择器匹配的祖先（父母，父母的父母，父母的父母的父母等）元素，则它们将被选择。利用后代组合器的选择器称为后代选择器。
+
+    ```html
+    <style>
+        #abc p {
+            background-color: red;
+        }
+    </style>
+    ```
+
+    如以上代码，它会作用于id为abc的元素下面所有的p元素，这些p元素的背景都是红色。
+
+    
+
+    然后是**子代选择器**，当使用  `>` 选择符分隔两个元素时,它只会匹配那些作为第一个元素的**直接后代(**子元素)的第二元素. 与之相比, 当两个元素由后代选择器相连时, 它表示匹配存在的所有由第一个元素作为祖先元素(但不一定是父元素)的第二个元素, 无论它在 DOM 中"跳跃" 多少次.
+
+    例子：
+
+    ```html
+    <style>
+    span { background-color: white; }
+    div > span {
+      background-color: DodgerBlue;
+    }
+    </style>
+    <div>
+      <span>Span 1. In the div.
+        <span>Span 2. In the span that's in the div.</span>
+      </span>
+    </div>
+    <span>Span 3. Not in a div at all</span>
+    ```
+
+    效果展示：
+
+    <span style='background-color: DodgerBlue'>Span 1. In the div.</span> Span 2. In the span that's in the div.
+    Span 3. Not in a div at all.
+
+    第三个是**相邻兄弟选择器**，相邻兄弟选择器 (`+`) 介于两个选择器之间，当第二个元素*紧跟在*第一个元素之后，并且两个元素都是属于同一个父元素的子元素，则第二个元素将被选中。
+
+    ```html
+    <style>
+        button + p {
+            color: red;
+        }
+    </style>
+    <div>
+        <button>
+            button1
+        </button>
+        <p>
+            p1
+        </p>
+        <p>
+            p2
+        </p>
+        <button>
+            button2
+        </button>
+        <p>
+            p3
+        </p>
+    </div>
+    ```
+
+    效果如下：
+
+    <button>button1</button>
+
+    <p style='color: red'>p1</p>
+
+    p2
+
+    <button>button2</button>
+
+    <p style='color: red'>p3</p>
+
+    最后是**通用兄弟选择器**，位置无须紧邻，只须同层级，`A~B` 选择`A`元素之后所有同层级`B`元素。
+
+    ```html
+    <style>
+        button ~ p {
+            color: red;
+        }
+    </style>
+    <div>
+        <button>
+            button1
+        </button>
+        <p>
+            p1
+        </p>
+        <p>
+            p2
+        </p>
+        <p>
+            p3
+        </p>
+    </div>
+    ```
+
+    效果如下：
+
+    <button>button1</button>
+
+    <p style='color: red'>p1</p>
+
+    <p style='color: red'>p2</p>
+
+    <p style='color: red'>p3</p>
+
+- **样式的继承**
+
+  一些设置在父元素上的css属性是可以被子元素继承的，有些则不能。举一个例子，如果你设置一个元素的 `color` 和 `font-family` ，每个在里面的元素也都会有相同的属性，除非你直接在元素上设置属性。
+
+  继承的样式没有优先级
+
+  一些属性是不能继承的 — 举个例子如果你在一个元素上设置 `width` 50% ，所有的后代不会是父元素的宽度的50% 。
+
+  至于哪些属性能够继承，哪些不能够继承多是由常识决定的。
+
+  有些元素是能够继承父元素的样式的，这种类型被称作**自然继承**。
+
+  哪些子元素是自然继承的而哪些不是也只能依靠经验的积累，这里不再赘述。
+
+  `CSS` 为控制继承提供了四个特殊的通用属性值。每个`css`属性都接收这些值。
+
+  - [inherit](https://developer.mozilla.org/zh-CN/docs/Web/CSS/inherit)
+
+    设置该属性会使子元素属性和父元素相同。实际上，就是 "开启继承".
+
+  - [initial](https://developer.mozilla.org/zh-CN/docs/Web/CSS/initial)
+
+    设置属性值和浏览器默认样式相同。如果浏览器默认样式中未设置且该属性是自然继承的，那么会设置为 `inherit` 。
+
+  - [unset](https://developer.mozilla.org/zh-CN/docs/Web/CSS/unset)
+
+    将属性重置为自然值，也就是如果属性是自然继承那么就是 `inherit`，否则和 `initial`一样
+
+  - [revert](https://developer.mozilla.org/en-US/docs/Web/CSS/revert)
+
+    这个属性只有很少的浏览器支持，不详细说明。
+
+  ```html
+  <style>
+  body {
+      color: green;
+  }
+            
+  .my-class-1 a {
+      color: inherit;
+  }
+            
+  .my-class-2 a {
+      color: initial;
+  }
+            
+  .my-class-3 a {
+      color: unset;
+  }
+  </style>
+  <ul>
+      <li>Default <a href="#">link</a> color</li>
+      <li class="my-class-1">Inherit the <a href="#">link</a> color</li>
+      <li class="my-class-2">Reset the <a href="#">link</a> color</li>
+      <li class="my-class-3">Unset the <a href="#">link</a> color</li>
+  </ul>
+  ```
+
+  效果如下：
+
+  [展示](https://jsbin.com/jilocevavu/edit?html,css,output)
+
+- **选择器权重**
+
+  **千位**： 如果声明在` style`的属性（内联样式）则该位得一分。这样的声明没有选择器，所以它得分总是`1000`。
+
+  **百位**： 选择器中包含`ID`选择器则该位得一分。
+
+  **十位**： 选择器中包含类选择器、属性选择器或者伪类则该位得一分。
+
+  **个位**：选择器中包含元素、伪元素选择器则该位得一分。
+
+  > 在进行计算时**不允许进行进位**，例如，20 个类选择器仅仅意味着 20 个十位，而不能视为 两个百位，也就是说，无论多少个类选择器的权重叠加，都不会超过一个 ID 选择器
+
+  ```html
+  <style>
+  /* specificity: 0101 */
+  #outer a {
+      background-color: red;
+  }
+          
+  /* specificity: 0201 */
+  #outer #inner a {
+      background-color: blue;
+  }
+  
+  /* specificity: 0104 */
+  #outer div ul li a {
+      color: yellow;
+  }
+  
+  /* specificity: 0113 */
+  #outer div ul .nav a {
+      color: white;
+  }
+  
+  /* specificity: 0024 */
+  div div li:nth-child(2) a:hover {
+      border: 10px solid black;
+  }
+  
+  /* specificity: 0023 */
+  div li:nth-child(2) a:hover {
+      border: 10px dashed black;
+  }
+  </style>
+  ```
+
+  综上：样式的优先级排序
+
+  
+
+  权重高的样式会覆盖掉权重低的样式，当权重相同的情况下，后引入的样式会覆盖前面引入的样式。
+
+  另外的，有一个特殊的`CSS`可以覆盖所有的优先级计算——`!important`，`!important`总是会覆盖掉其他样式，除了另一个 `!important` 具有 相同*优先级* 而且顺序靠后，或者更高优先级。
+
 
 #### 3.浏览器的默认样式
 
@@ -262,7 +697,11 @@
 
 - 预处理器 如 [less](https://less.bootcss.com/)  
 
-  对 CSS 进行了一些扩展, 使用 [嵌套](https://less.bootcss.com/#%E5%B5%8C%E5%A5%97%EF%BC%88nesting%EF%BC%89) 的方式书写代码,让代码更加简洁,还提供了 **变量** 和 **函数** 等其他功能
+  对 CSS 进行了一些扩展, 使用 [嵌套](https://less.bootcss.com/#%E5%B5%8C%E5%A5%97%EF%BC%88nesting%EF%BC%89) 的方式书写代码, `&`( and 符号）表示父元素，代码更加简洁,还提供了 **变量** 和 **函数** 等其他功能
+  
+- 遵循样式书写规范，包括选择器命名，属性书写顺序等。
+
+  - 按照团队约定规范执行
 
 ### 3. CSS 基础内容
 
@@ -363,7 +802,7 @@
 
   通过将（块级）盒子的 `display ` 属性设置为 `flex` , 可以将盒子变为弹性容器。
 
-  > 假如你想设置行内元素为 flexible box，也可以置 [`display`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/display) 属性的值为 `inline-flex` (--[MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Flexbox#%E6%8C%87%E5%AE%9A%E5%85%83%E7%B4%A0%E7%9A%84%E5%B8%83%E5%B1%80%E4%B8%BA_flexible))
+  > 假如你想设置行内元素为 flexible box，也可以置 `display`属性的值为 `inline-flex` (--[MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Flexbox#%E6%8C%87%E5%AE%9A%E5%85%83%E7%B4%A0%E7%9A%84%E5%B8%83%E5%B1%80%E4%B8%BA_flexible))
 
   弹性容器具有以下几个特点：
 
@@ -536,11 +975,129 @@
 
 #### 5.响应式
 
+多种技术
+
+- 媒体查询
+
+  **CSS媒体查询**为你提供了一种应用CSS的方法，仅在浏览器和设备的环境与你指定的规则相匹配的时候CSS才会真的被应用（MDN)
+
 #### 6.视口
 
 #### 7.单位
 
-### 4.CSS如何运作
+- 像素
+  - 物理像素
+  - CSS 像素
+- rem
+- 百分比
+- 视口单位，`vw`,`vh`
+
+### 4.CSS3 新特性
+
+可以参考 [segmentfault - 个人总结（css3新特性）](https://segmentfault.com/a/1190000010780991)
+
+- 过渡
+
+  `transition`过渡效果
+
+  `transition`属性是一个简写属性, `4` 个值分别对应以下几个 属性
+
+  `transition: width 1s ease 0.5s;`
+
+  ```css
+  transition-property: width; /* 要进行过渡的属性 */
+  transition-duration: 1s; /* 过渡持续的时间 */
+  transition-timing-function: ease; /* 时序函数 , 动画的速度曲线，可由 cubic-bezier() 函数指定*/
+  transition-delay: 0.5s; /* 动画延迟执行的时间 */
+  ```
+
+  [▶ 在线演示](https://jsbin.com/cikotuvoca/1/edit?html,css,output)
+
+  下面是一个 [MDN的示例](https://interactive-examples.mdn.mozilla.net/pages/css/transition.html)
+
+  <iframe class="interactive" height="390" src="https://interactive-examples.mdn.mozilla.net/pages/css/transition.html" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+
+  <center><a href = 'https://developer.mozilla.org/zh-CN/docs/Web/CSS/transition'><i>CSS Demo:transition -MDN</i></a></center>
+
+  > 可以到 [cubic-bezier.com](https://cubic-bezier.com/#.33,.81,.83,.67) 生成想要的贝塞尔曲线，常用的有 5种预设，默认值是`ease`可以到上述网站查看效果
+  >
+  > ![image-20210906163312232](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210906163312232.png)
+
+- 变形
+
+  `transform` 参见 [MDN-transform-function](https://developer.mozilla.org/zh-CN/docs/Web/CSS/transform-function#browser_compatibility)
+
+  - 旋转 `rotate()`
+
+  - 平移 `translate()` [▶在线演示](https://jsbin.com/zalohagihu/1/edit?html,css,output)
+
+  - 缩放 `scale()`
+
+- 阴影
+
+  `box-shadow` 
+
+  语法 （ [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/box-shadow) ）
+
+  ```css
+  /* x偏移量 | y偏移量 | 阴影颜色 */
+  box-shadow: 60px -16px teal;
+  
+  /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影颜色 */
+  box-shadow: 10px 5px 5px black;
+  
+  /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  ```
+
+  <iframe class="interactive" height="390" src="https://interactive-examples.mdn.mozilla.net/pages/css/box-shadow.html" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+
+  <center><a href = 'https://developer.mozilla.org/zh-CN/docs/Web/CSS/box-shadow'><i>CSS Demo:box-shadow -MDN</i></a></center>
+
+- 边框圆角
+
+  `border-radius`
+
+  <iframe class="interactive" height="390" src="https://interactive-examples.mdn.mozilla.net/pages/css/border-radius.html" title="MDN Web Docs Interactive Example" loading="lazy"></iframe>
+
+  <center><a href = 'https://developer.mozilla.org/zh-CN/docs/Web/CSS/border-radius'><i>CSS Demo:border-radius -MDN</i></a></center>
+
+  > border-radius还可以用**斜杠**设置第二组值。这时，第一组值表示水平半径，第二组值表示垂直半径。第二组值也可以同时设置1到4个值，应用规则与第一组值相同( [CSS3圆角详解](http://www.ruanyifeng.com/blog/2010/12/detailed_explanation_of_css3_rounded_corners.html))
+
+- 计算函数 , css变量
+
+  **calc()函数**，支持数值的 加减乘除，如宽度，高度，颜色等
+
+  ```css
+  width: calc(100% - 80px);
+  ```
+
+  **CSS 变量**
+
+  使用 `--` 声明变量，如 :
+
+  ```css
+  body {
+    --textColor: #000;
+    --navHeight: 60px;
+  }
+  ```
+
+  使用 `var() ` 函数读取变量，如：
+
+  ```css
+  .nav {
+      color: var(--textColor);
+      height: var(--navHeight)
+  }
+  ```
+
+  关于 `CSS变量`可参考：
+
+  - [MDN-使用CSS自定义属性](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties)
+  - [阮一峰-CSS 变量教程](https://www.ruanyifeng.com/blog/2017/05/css-variables.html)
+
+### 5.CSS如何运作
 
 参见：
 
@@ -551,37 +1108,25 @@
 
 大概流程：
 
-- 
+- 处理 HTML 标记并构建 `DOM `树
 
+  原始字节 -->  字符 -->  令牌化 --> 词法分析 -->` DOM `构建
 
+- 处理 `CSS` 标记并构建 `CSSOM` 树
+
+- 将 `DOM` 与 `CSSOM` 合并成一个渲染树
+
+  > 注：渲染树只包含渲染网页所需的节点，如`display: none;`的元素是不会出现在渲染树中的。
+
+- 根据渲染树来布局，计算每个节点的几何信息，再将各个节点绘制到屏幕上
+
+  - 布局
+  - 绘制
+  - 回流
+  - 重绘
 
 ![render-1](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/render-1.png)
 
 
 
-
-
 ![render-5](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/render-5.png)
-
-
-
-### 5.CSS3 新特性
-
-可以参考 [个人总结（css3新特性）](https://segmentfault.com/a/1190000010780991)
-
-- 动画
-
-  `transform`
-
-- 阴影
-
-  `box-shadow`
-
-- 边框圆角
-
-- 
-
-- 计算函数 , css变量
-
-  
-
