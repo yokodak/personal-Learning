@@ -965,32 +965,149 @@
 
   
 
-  如果想要改变层叠的顺序，可以通过设置 `z-index` 的属性值实现，
+  如果想要改变层叠的顺序，可以通过设置 `z-index` 的属性值实现，值越大，层级越高。
 
-  值越大，层级越高，祖先元素的层级再高也不会覆盖其子元素 [▶在线演示](https://jsbin.com/piwisamimi/1/edit?html,css,output)
+  祖先元素的层级再高也不会覆盖其子元素 [▶在线演示](https://jsbin.com/piwisamimi/1/edit?html,css,output)
 
   > 网页也有一个z轴：一条从屏幕表面到你的脸（或者在屏幕前面你喜欢的任何其他东西）的虚线 。
   >
   > [z-index](https://developer.mozilla.org/zh-CN/docs/Web/CSS/z-index) 值影响定位元素位于该轴上的位置；正值将它们向上移动，负值将它们向下移动。默认情况下，定位的元素都具有 `z-inde` 为 `auto`，实际上为`0`（ [MDN](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Positioning) ）
 
-#### 5.响应式
+#### 5.视口
 
-多种技术
+视口（`viewport`) 通常与浏览器窗口相同，但不包括浏览器的 UI， 菜单栏等——即指你正在浏览的文档的那一部分
 
-- 媒体查询
+概括地说，`viewport`  基本上是当前文档的可见部分。( [MDN-视口概念](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Viewport_concepts) )
 
-  **CSS媒体查询**为你提供了一种应用CSS的方法，仅在浏览器和设备的环境与你指定的规则相匹配的时候CSS才会真的被应用（MDN)
+移动端，完美视口
 
-#### 6.视口
+移动端网页的视口是980css像素
 
-#### 7.单位
+- vw
+- vh
+
+#### 6.单位
 
 - 像素
-  - 物理像素
-  - CSS 像素
-- rem
-- 百分比
+
+  - 物理像素（设备像素 `DP`）
+
+    显示屏的**实际**像素点( `point`)，最小显示单位，通过控制每个像素点的颜色，呈现出整个图像。
+
+    不同的设备所拥有的像素点数是不同的。单位面积内的像素点越多（`ppi`越高），图像越清晰。
+
+    如下 `iPhone3GS` 与 `iphone4` 屏幕的对比，它们的屏幕尺寸相同，不过 `iphone4`的像素密度更大，所以图像也更清晰。
+
+    <div style = 'display:flex;'>
+      <div>
+        <img src = 'https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/Non-Retina_Display.jpg' style = 'width:400px;'/><br><br>
+            <center><i>图片：<a href ='https://commons.wikimedia.org/w/index.php?curid=20103667'>iPhone3Gs-Non-Retina</a>  作者：Haotian0905</i></center>
+        </div>
+        <div>
+            <img src = 'https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/1280px-Retina_Display.jpg' style = 'width:400px;'/><br><br>
+            <center><i>图片：<a href ='https://commons.wikimedia.org/w/index.php?curid=20103668'>iPhone4-Retina</a>  作者：Haotian0905</i></center>
+        </div>
+        </div>
+    
+  - 设备独立像素
+
+    使用 物理像素 来作为 `web` 元素的单位显然不合适，因为如上文所述，不同设备的物理像素点不一样，比如 `iPhone 3`物理像素是`320*480`，`iPhone 4`的物理像素是`640*960`。
+
+    如果以 定义一个 `2*2` 物理像素（pt）的 `div` ，那么在 `i4`上显示的面积只有 `i3` 的 `1/4`。
+
+    
+
+    我们平时描述元素的宽高所使用的单位 `px`，是一个抽象单位，默认情况下（页面未缩放），`1px` 所描述的就是一个设备独立像素。
+
+    
+
+    ![img](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/22352213J-4.png)
+
+    
+
+    <center><i>图片：相同的设备独立像素在 iPhone3GS 与 iphone4 的对比 <br><br><a href ='http://www.nwpit.com/html/article/753.html'>图源</a>  </i></center>
+
+  - DPR 设备像素比
+
+    即 物理像素 / 设备独立像素，比如 提到 `iphone 6` 物理像素为`750*1334`,而它的 设备独立像素是 `375*667`, 那么它的`dpr` = `750/375` = `2`
+
+    
+
+    ![image-20210906193734755](https://gitee.com/yaorunhua/runbed/raw/master/img/LX_work/image-20210906193734755.png)
+
+    
+
+    也就是说，在`iphone 6` 上，我们`CSS`写的一个 `1px*1px`的小方块,实际所占据的物理像素为 `2*2`也就是`4`个物理像素点。
+
+    
+
+- 绝对长度
+
+  `cm `,`mm` 等，打印时比较常用
+
+- `em`, `rem`
+
+  `em`是一个相对单位， `1em` =  `1 font-size`;会随着字体的大小而改变
+
+- 百分比 `%`
+
+  随着其父元素的大小而变化。
+
 - 视口单位，`vw`,`vh`
+
+  `vw`：视口宽度
+
+  `vh`：视口高度
+
+  随着视口的改变而变化
+
+- 颜色单位
+
+  - `rgb`-  红，绿，蓝
+
+  - `rgba ` ：`a `表示不透明度 从 `0 -1 `, `0` 表示完全透明
+
+  - `HSL`，`HSLA`
+    - `H` 色相 （ 0-360 )
+    - `S` 饱和度 (颜色浓度) 0%-100%
+    - `L `亮度  0%-100%
+    - `A` 不透明度
+
+#### 7.响应式
+
+- 传统布局
+
+  统一使用 `px`作为单位，页面布局固定，浏览器窗口缩小时，被遮挡部分通过滚动条浏览。
+
+  移动端另外搭建网站，采用不同布局。
+
+  
+
+多种技术，一套代码，多端适配
+
+- 非绝对长度
+
+  采用 `%`，`rem` 等单位
+
+- 媒体查询 - 有条件的应用样式
+
+  **CSS媒体查询**为你提供了一种应用CSS的方法，仅在浏览器和设备的环境与你指定的**规则相匹配**的时候CSS才会真的被应用（MDN)
+
+  - 语法
+
+    每条媒体查询语句都由一个可选的 *媒体类型*  和 任意数量的 *媒体特性* 表达式构成。
+
+    如：
+
+    ```css
+    @media  screen  and (min-width: 680px) and (max-width: 980px) { 
+        body {
+            background-color:green;
+        }
+    }  /*屏幕上 680px 至 980px 之间，将 body 元素的背景色设置为绿色*/
+    ```
+
+    关于媒体查询，参见 [MDN-媒体查询](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Media_Queries)
 
 ### 4.CSS3 新特性
 
@@ -1062,7 +1179,7 @@
 
   <center><a href = 'https://developer.mozilla.org/zh-CN/docs/Web/CSS/border-radius'><i>CSS Demo:border-radius -MDN</i></a></center>
 
-  > border-radius还可以用**斜杠**设置第二组值。这时，第一组值表示水平半径，第二组值表示垂直半径。第二组值也可以同时设置1到4个值，应用规则与第一组值相同( [CSS3圆角详解](http://www.ruanyifeng.com/blog/2010/12/detailed_explanation_of_css3_rounded_corners.html))
+  > border-radius还可以用 **斜杠** 设置第二组值。这时，第一组值表示水平半径，第二组值表示垂直半径。第二组值也可以同时设置1到4个值，应用规则与第一组值相同( [CSS3圆角详解](http://www.ruanyifeng.com/blog/2010/12/detailed_explanation_of_css3_rounded_corners.html))
 
 - 计算函数 , css变量
 
