@@ -354,22 +354,21 @@
 
     ```html
     <style>
-    span { background-color: white; }
-    div > span {
-      background-color: DodgerBlue;
+    a[title='abc'] {
+      color: purple;
     }
     </style>
     /* 存在title属性值为abc的<a> 元素 */
     ```
-
     
-
+    
+    
     ```
     [attr~=value]
     ```
-
+    
     表示带有以 attr 命名的属性的元素，并且该属性是一个以空格作为分隔的值列表，其中至少有一个值为 value。
-
+    
     ```html
     <style>
     a[class~="logo"] {
@@ -378,41 +377,41 @@
     </style>
      /* 存在class属性并且属性值包含以空格分隔的"logo"的<a>元素 */   
     ```
-
     
-
+    
+    
     ```
     [attr|=value]
     ```
-
+    
     表示带有以 attr 命名的属性的元素，属性值为“value”或是以“value-”为前缀（"`-`"为连字符，Unicode 编码为 U+002D）开头。典型的应用场景是用来匹配语言简写代码（如 zh-CN，zh-TW 可以用 zh 作为 value）。
-
+    
     ```
     [attr^=value]
     ```
-
+    
     表示带有以 attr 命名的属性，且属性值是以 value 开头的元素。
-
+    
     ```
     [attr$=value]
     ```
-
+    
     表示带有以 attr 命名的属性，且属性值是以 value 结尾的元素。
-
+    
     ```
     [attr*=value]
     ```
-
+    
     表示带有以 attr 命名的属性，且属性值至少包含一个 value 值的元素。
-
+    
     值得一提的是，`[id=value]`与id选择器的效果相同，`[class=value]`与类选择器的效果相同。
-
+    
   - **关系选择器**
-
+  
     关系选择器通常有四种，分别是后代选择器、子代选择器、相邻兄弟选择器、通用兄弟选择器。
-
+  
     首先是**后代选择器**：后代组合器（通常用单个空格（` `）字符表示）组合了两个选择器，如果第二个选择器匹配的元素具有与第一个选择器匹配的祖先（父母，父母的父母，父母的父母的父母等）元素，则它们将被选择。利用后代组合器的选择器称为后代选择器。
-
+  
     ```html
     <style>
         #abc p {
@@ -420,15 +419,15 @@
         }
     </style>
     ```
-
+  
     如以上代码，它会作用于id为abc的元素下面所有的p元素，这些p元素的背景都是红色。
-
+  
     
-
+  
     然后是**子代选择器**，当使用  `>` 选择符分隔两个元素时,它只会匹配那些作为第一个元素的**直接后代(**子元素)的第二元素. 与之相比, 当两个元素由后代选择器相连时, 它表示匹配存在的所有由第一个元素作为祖先元素(但不一定是父元素)的第二个元素, 无论它在 DOM 中"跳跃" 多少次.
-
+  
     例子：
-
+  
     ```html
     <style>
     span { background-color: white; }
@@ -443,14 +442,14 @@
     </div>
     <span>Span 3. Not in a div at all</span>
     ```
-
+  
     效果展示：
-
+  
     <span style='background-color: DodgerBlue'>Span 1. In the div.</span> Span 2. In the span that's in the div.
     Span 3. Not in a div at all.
-
+  
     第三个是**相邻兄弟选择器**，相邻兄弟选择器 (`+`) 介于两个选择器之间，当第二个元素*紧跟在*第一个元素之后，并且两个元素都是属于同一个父元素的子元素，则第二个元素将被选中。
-
+  
     ```html
     <style>
         button + p {
@@ -475,21 +474,21 @@
         </p>
     </div>
     ```
-
+  
     效果如下：
-
+  
     <button>button1</button>
-
+  
     <p style='color: red'>p1</p>
-
+  
     p2
-
+  
     <button>button2</button>
-
+  
     <p style='color: red'>p3</p>
-
+  
     最后是**通用兄弟选择器**，位置无须紧邻，只须同层级，`A~B` 选择`A`元素之后所有同层级`B`元素。
-
+  
     ```html
     <style>
         button ~ p {
@@ -511,17 +510,17 @@
         </p>
     </div>
     ```
-
+  
     效果如下：
-
+  
     <button>button1</button>
-
+  
     <p style='color: red'>p1</p>
-
+  
     <p style='color: red'>p2</p>
-
+  
     <p style='color: red'>p3</p>
-
+  
 - **样式的继承**
 
   一些设置在父元素上的css属性是可以被子元素继承的，有些则不能。举一个例子，如果你设置一个元素的 `color` 和 `font-family` ，每个在里面的元素也都会有相同的属性，除非你直接在元素上设置属性。
