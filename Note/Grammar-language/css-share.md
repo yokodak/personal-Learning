@@ -696,7 +696,7 @@
 
 - 预处理器 如 [less](https://less.bootcss.com/)  
 
-  对 CSS 进行了一些扩展, 使用 [嵌套](https://less.bootcss.com/#%E5%B5%8C%E5%A5%97%EF%BC%88nesting%EF%BC%89) 的方式书写代码, `&`( and 符号）表示父元素，代码更加简洁,还提供了 **变量** 和 **函数** 等其他功能
+  对 CSS 进行了一些扩展, 使用 [嵌套](https://less.bootcss.com/#%E5%B5%8C%E5%A5%97%EF%BC%88nesting%EF%BC%89) 的方式书写代码, `&`( and 符号）表示父元素，代码更加简洁, 还提供了 **变量** 和 **函数** 等其他功能
   
 - 遵循样式书写规范，包括选择器命名，属性书写顺序等。
 
