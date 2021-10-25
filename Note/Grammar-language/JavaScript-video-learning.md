@@ -1312,6 +1312,8 @@ var 变量 = new RegExp("正则表达式"，"匹配模式")；
 
 在正则表达式中.代表任意字符，如果要查找.则需要借助转义字符\;
 
+[正则中需要转义的特殊字符](https://blog.csdn.net/lvshubao1314/article/details/51222978) ：`* . ? + $ ^ [ ] ( ) { } | \ /`
+
 ![image-20200913185608355](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200913185608355.png)
 
 ![image-20200913185539362](C:\Users\yokoda\AppData\Roaming\Typora\typora-user-images\image-20200913185539362.png)
